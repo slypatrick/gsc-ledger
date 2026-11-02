@@ -54,6 +54,7 @@ const W=595,H=842,ML=45,RIGHT=550,MAXY=777;
  text(ML,y,tr('This report is based on recorded entries; it is not a bank reconciliation.','Ce rapport reprend les ecritures saisies; il ne remplace pas un rapprochement bancaire.'),8,false,muted);
 
  y+=31;
+ ensure(130,tr('TREASURY POSITION','SITUATION DE TRESORERIE'));
  heading(tr('04   TREASURY POSITION','04   SITUATION DE TRESORERIE'));
  const ta=report.treasuryAccounts||[],funds=ta.reduce((n,a)=>n+Number(a.balance_cents||0),0);
  text(ML,y,tr('Available funds as of ','Fonds disponibles au ')+report.to,10,false,muted);y+=21;
