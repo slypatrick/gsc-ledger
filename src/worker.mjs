@@ -1,6 +1,6 @@
-
+const WS_ICONS=['layers','heart','home','briefcase','building','bank','book','graduation','globe','star','gift','cart','car','coffee','leaf','medical','music','flag','bulb','plane','wallet','users','shield','pie','spark'];
 function gscCreatePdf(report){
- const W=595,H=842,ML=45,RIGHT=550,MAXY=777;
+const W=595,H=842,ML=45,RIGHT=550,MAXY=777;
  const lang=report.lang==='fr'?'fr':'en';
  const tr=(en,fr)=>lang==='fr'?fr:en;
  const dark='#153d32',green='#297752',pale='#eaf1ea',ink='#23392e',muted='#6c8073',line='#dde6dd',white='#ffffff',amber='#a77735';
@@ -226,11 +226,11 @@ if(req.method!=='POST')return E('Not found',404);
 let b=await read(req),group=tx(b.group_id,80);
 if(p==='/api/groups'){
 let name=tx(b.name,80),cur=tx(b.currency,3).toUpperCase(),v=b.visibility==='team'?'team':'private';if(!name||!['TND','USD','EUR','CAD','GBP'].includes(cur))return E('Invalid group');
-let gid=id();await d.batch([Q(d,'INSERT INTO groups(id,name,description,icon,color,visibility,currency,created_by) VALUES(?,?,?,?,?,?,?,?)',gid,name,tx(b.description,300),'layers','#164b3d',v,cur,user.id),Q(d,'INSERT INTO memberships(group_id,user_id,role) VALUES(?,?,?)',gid,user.id,'owner'),audit(d,gid,user.id,'group.created','group',gid,{name,visibility:v})]);return R({ok:true,id:gid});
+let gid=id();await d.batch([Q(d,'INSERT INTO groups(id,name,description,icon,color,visibility,currency,created_by) VALUES(?,?,?,?,?,?,?,?)',gid,name,tx(b.description,300),WS_ICONS.includes(b.icon)?b.icon:'layers','#164b3d',v,cur,user.id),Q(d,'INSERT INTO memberships(group_id,user_id,role) VALUES(?,?,?)',gid,user.id,'owner'),audit(d,gid,user.id,'group.created','group',gid,{name,visibility:v})]);return R({ok:true,id:gid});
 }
 if(p==='/api/group/update'){
 if(!await acl(d,user.id,group,'owner'))return E('Owner required',403);let name=tx(b.name,80),v=b.visibility==='team'?'team':'private';if(!name)return E('Name required');
-await d.batch([Q(d,'UPDATE groups SET name=?,description=?,visibility=? WHERE id=?',name,tx(b.description,300),v,group),audit(d,group,user.id,'group.updated','group',group,{name,visibility:v})]);return R({ok:true});
+await d.batch([Q(d,'UPDATE groups SET name=?,description=?,visibility=?,icon=? WHERE id=?',name,tx(b.description,300),v,WS_ICONS.includes(b.icon)?b.icon:(await one(d,'SELECT icon FROM groups WHERE id=?',group))?.icon||'layers',group),audit(d,group,user.id,'group.updated','group',group,{name,visibility:v})]);return R({ok:true});
 }
 if(p==='/api/invite/create'){
 if(!await acl(d,user.id,group,'owner'))return E('Owner required',403);let email=tx(b.email).toLowerCase(),role=tx(b.role,20);if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!['controller','editor','viewer'].includes(role))return E('Invalid invitation');
