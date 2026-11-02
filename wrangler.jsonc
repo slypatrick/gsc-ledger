@@ -8,7 +8,7 @@
     {
       "binding": "DB",
       "database_name": "gsc-ledger-db",
-      "database_id": "REPLACE_WITH_NEW_D1_DATABASE_UUID"
+      "database_id": "0fa67641-0e0c-40de-a0a9-4acc3b3cea6f"
     }
   ]
 }
