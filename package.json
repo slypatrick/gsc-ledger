@@ -1,0 +1,17 @@
+{
+  "name": "gsc-ledger",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Public source for the GSC Ledger Cloudflare Worker and D1 application",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check-repo.mjs",
+    "seed:assets": "node scripts/seed-assets.mjs",
+    "setup:key": "node scripts/generate-setup-key.mjs",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

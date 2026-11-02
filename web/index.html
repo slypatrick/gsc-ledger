@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#153d32"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="GSC Ledger"><link rel="icon" type="image/png" sizes="48x48" href="/favicon.ico?v=2"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2"><link rel="manifest" href="/manifest.webmanifest?v=2"><title>GSC Ledger — Shared budgets & expenses</title>
+<style>
+:root{--pine:#153d32;--pine2:#0b2d25;--green:#227b5a;--mint:#dcebe0;--lime:#c7dcbd;--paper:#fafaf7;--cream:#f2f2eb;--ink:#172821;--sub:#758078;--line:#e8eae3;--white:#fff;--shadow:0 20px 70px rgba(18,53,39,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}svg{width:19px;height:19px;flex:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8;fill:none;stroke:currentColor}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #79b993;outline-offset:2px}.hidden{display:none!important}.app{display:flex;min-height:100vh}.side{width:266px;min-width:266px;background:#f6f7f2;border-right:1px solid var(--line);height:100vh;position:sticky;top:0;padding:30px 16px 20px;display:flex;flex-direction:column;z-index:30}.brand{display:flex;gap:12px;align-items:center;font-size:19px;font-weight:800;letter-spacing:-.7px;padding:4px 14px 30px}.brand-icon{display:grid;place-items:center;width:39px;height:39px;border-radius:14px;color:white;background:var(--pine)}.brand-icon svg{width:22px;height:22px}.brand small{display:block;font-size:10px;color:var(--sub);letter-spacing:1.6px;font-weight:700;margin-top:4px}.minor{font-size:10px;letter-spacing:1.75px;color:#8d9790;font-weight:800;text-transform:uppercase;margin:18px 15px 12px}.group-item{display:flex;align-items:center;gap:10px;border:1px solid transparent;border-radius:12px;background:transparent;padding:10px 12px;width:100%;text-align:left;color:#506058}.group-item.selected{background:#e7efe8;border-color:#dce9de;color:#183f32}.group-item .emblem{width:32px;height:32px;border-radius:10px;background:#d8eadd;display:grid;place-items:center;color:var(--pine)}.group-item .name{font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tinylock svg{width:13px;height:13px;opacity:.6}.nav{display:flex;flex-direction:column;gap:3px}.navbtn{width:100%;display:flex;align-items:center;gap:12px;border:0;border-radius:12px;background:transparent;color:#657168;font-weight:600;text-align:left;padding:13px 14px}.navbtn svg{width:18px;height:18px}.navbtn.active{background:var(--pine);color:white;box-shadow:0 7px 15px rgba(17,61,48,.12)}.navbtn:hover:not(.active),.group-item:hover:not(.selected){background:#e9ede7}.sidefooter{margin-top:auto;padding:14px 7px 2px}.help-card{background:#e8eee5;border-radius:16px;padding:16px 15px;color:var(--pine);margin-bottom:16px}.help-card b{font-size:13px}.help-card p{font-size:12px;line-height:1.5;color:#668071;margin:7px 0 0}.person{display:flex;align-items:center;gap:9px;padding:8px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#85a495;font-weight:800}.person-name{flex:1;min-width:0}.person-name b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.person-name small{color:#909990;font-size:11px}.round{border:none;background:transparent;display:grid;place-items:center;border-radius:12px;width:37px;height:37px;color:#6e786f}.round:hover{background:var(--cream)}.main{min-width:0;flex:1;padding:31px clamp(22px,4vw,64px) 90px;max-width:1580px;margin:auto}.header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:31px}.crumb{font-size:12px;color:#969e95;font-weight:600}.crumb strong{color:#45554a;font-weight:700}.headline{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 25px}.headline h1{font-size:clamp(27px,3vw,36px);letter-spacing:-1.6px;font-weight:750;line-height:1.15;margin:0 0 7px}.headline p{color:#8a948b;margin:0;font-size:13px}.actions,.flex{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:white;color:var(--ink);padding:11px 15px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap;transition:transform .14s,box-shadow .14s}.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px #193b2e12}.btn svg{width:16px;height:16px}.btn.primary{background:var(--pine);color:white;border-color:var(--pine)}.btn.soft{background:#eef4ee;border-color:#e4ebe2;color:var(--pine)}.btn.small{font-size:12px;padding:8px 10px;border-radius:9px}.btn.ghost{border:none;background:transparent}.btn.danger{background:#fff2ef;border-color:#f4ddd7;color:#a34c3c}.dashboard-grid{display:grid;grid-template-columns:1.45fr 1fr 1fr;gap:17px;margin-bottom:19px}.hero-card{min-height:226px;background:radial-gradient(circle at 88% 100%,#3d765a 0,#1b513e 35%,#123b30 76%);border-radius:21px;padding:25px 27px;color:white;position:relative;overflow:hidden;box-shadow:0 12px 30px #0f49301c}.hero-card:after{content:'';position:absolute;right:-64px;bottom:-142px;width:320px;height:320px;border:43px solid #ffffff0a;border-radius:50%;pointer-events:none}.hero-card .tiny{color:#c1d7ca;font-size:12px;display:flex;align-items:center;gap:8px}.hero-card .money{font-weight:750;letter-spacing:-2px;font-size:clamp(32px,3.2vw,49px);margin:27px 0 15px;line-height:1.1}.hero-card .money small{font-size:14px;letter-spacing:0;font-weight:500;color:#b1ccbc}.hero-card .footer{font-size:12px;color:#cee1d2;display:flex;align-items:center;gap:8px}.hero-card .footer strong{font-weight:600}.frost{display:grid;place-items:center;width:35px;height:35px;border-radius:12px;background:#ffffff20}.stat{background:white;border:1px solid #edf0eb;border-radius:21px;padding:25px;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:space-between;min-height:226px}.stat-top{display:flex;justify-content:space-between;align-items:start}.stat .iconbox{width:42px;height:42px;border-radius:14px;background:#edf3eb;color:var(--pine);display:grid;place-items:center}.stat small{color:#89938b;font-weight:600}.stat h2{font-size:30px;letter-spacing:-1.2px;font-weight:760;margin:10px 0}.stat footer{border-top:1px solid #f0f2ed;padding-top:14px;color:#849187;font-size:12px}.stat footer strong{color:var(--green)}.two{display:grid;grid-template-columns:1.28fr 1fr;gap:19px;margin-bottom:20px}.panel{background:white;border:1px solid #edf0eb;border-radius:20px;box-shadow:var(--shadow);padding:23px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px}.panel-head h3{margin:0;font-size:16px;letter-spacing:-.4px}.panel-head small{color:var(--sub)}.link{border:0;background:transparent;font-size:12px;color:var(--green);font-weight:750;display:flex;gap:5px;align-items:center}.link svg{width:14px;height:14px}.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f1f3ee}.item:last-child{border:0}.itemico{width:41px;height:41px;border-radius:13px;background:#ecf3ea;color:var(--pine);display:grid;place-items:center}.itemico svg{width:19px;height:19px}.itemmain{min-width:0;flex:1}.itemmain b{font-size:13px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.itemmain small{font-size:11px;color:#919b91;display:block;margin-top:5px}.itemamount{text-align:right;font-weight:750;font-size:13px}.itemamount small{display:block;margin-top:6px;font-weight:500}.badge{font-size:10px;padding:5px 8px;border-radius:30px;background:#f0f1ef;color:#6e766e;font-weight:800;white-space:nowrap;text-transform:capitalize}.badge.paid,.badge.approved,.badge.funded{background:#e1f3e7;color:#267453}.badge.pending,.badge.waiting{background:#fff4e1;color:#ab7836}.badge.rejected{background:#fbece8;color:#a85049}.badge.urgent{background:#ffe7e2;color:#b14a3d}.donutwrap{display:flex;gap:22px;align-items:center;min-height:195px}.donut{width:174px;height:174px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#e6ece5 0 100%);flex:none}.donut:before{content:'';position:absolute;inset:28px;border-radius:50%;background:white}.donut-center{position:relative;text-align:center}.donut-center b{font-size:23px;letter-spacing:-.9px}.donut-center small{display:block;color:#9aa39a;margin-top:5px;font-size:11px}.legend{flex:1;min-width:0}.legend-row{display:flex;gap:8px;align-items:center;margin:10px 0;font-size:11px;color:#6d786f}.legend-row b{margin-left:auto;color:#26392f}.dot{width:9px;height:9px;border-radius:50%;flex:none}.empty{padding:27px 14px;text-align:center;color:#89958a}.empty .empty-icon{margin:0 auto 11px;width:49px;height:49px;border-radius:17px;background:#edf4ed;display:grid;place-items:center;color:var(--pine)}.empty b{display:block;color:var(--ink);margin-bottom:6px}.empty p{font-size:12px;line-height:1.6;max-width:270px;margin:0 auto 12px}.split{display:flex;align-items:center;justify-content:space-between;gap:15px}.callout{background:#edf3e9;border:1px solid #e3ebdf;color:#365f47;border-radius:17px;padding:16px 18px;display:flex;gap:13px;align-items:center}.callout span{line-height:1.55;font-size:12px}.callout b{display:block;font-size:13px}.callout svg{width:26px;height:26px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:16px}.table{border-collapse:collapse;width:100%;font-size:12px;min-width:630px}.table th{text-align:left;color:#8a948a;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:750;padding:15px 17px;background:#fbfcfa;border-bottom:1px solid var(--line)}.table td{padding:15px 17px;border-bottom:1px solid #f1f2ee;vertical-align:middle}.table tr:last-child td{border-bottom:0}.table tbody tr:hover{background:#fafbf8}.table td strong{font-weight:720}.table td small{color:#96a097;display:block;margin-top:5px}.clickable{cursor:pointer}.filters{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 18px}.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:white;border-radius:12px;padding:0 12px;min-width:240px;flex:1}.search svg{color:#929b92;width:17px;height:17px}.search input{border:0;outline:0;min-width:0;width:100%;padding:12px 0;background:transparent}.field,.filters select{border:1px solid #e1e8df;border-radius:11px;background:white;padding:11px 12px;min-width:0;color:var(--ink);width:100%}.filters select{width:auto}.label{display:block;font-weight:720;font-size:11px;margin:0 0 7px;color:#536358}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.fieldgroup{margin-bottom:14px;min-width:0}.fieldgroup.full{grid-column:1/-1}textarea.field{min-height:85px;resize:vertical}.modalbg{position:fixed;inset:0;background:rgba(7,26,20,.48);z-index:110;display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto;backdrop-filter:blur(5px)}.modal{background:#fff;border-radius:22px;width:min(570px,100%);max-height:92vh;overflow:auto;box-shadow:0 34px 100px #081e1966;padding:26px}.modal h2{font-size:23px;letter-spacing:-.7px;margin:0}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:19px}.modal-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:19px;border-top:1px solid #edf0e9;padding-top:18px}.note{font-size:12px;color:#7d8b80;line-height:1.6}.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid #e5eae4;background:#f6f8f3;color:#6f7a70;font-size:11px;font-weight:700;border-radius:100px;padding:7px 11px}.pill.on{background:#e2eee4;color:#1c6848;border-color:#d8e7d9}.requestgrid,.commitgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.requestcard{padding:19px;border-radius:17px;border:1px solid #e8ece6;background:white;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}.requestcard h3{margin:0;font-size:15px;line-height:1.4}.requestcard .desc{font-size:12px;color:#88978a;line-height:1.5}.requestcard .value{font-size:22px;font-weight:770;letter-spacing:-.6px}.requestcard .bottom{margin-top:auto;padding-top:15px;display:flex;gap:7px;flex-wrap:wrap}.barrow{display:flex;align-items:center;gap:12px;margin:17px 0}.barrow label{width:102px;font-size:12px;color:#6e7c70;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.barrow .track{height:10px;border-radius:10px;flex:1;background:#edf2ec;overflow:hidden}.barrow .fill{height:100%;background:var(--pine);border-radius:10px;min-width:0}.barrow b{font-size:12px;width:96px;text-align:right}.monthly-chart{display:flex;gap:10px;align-items:end;height:200px;padding:20px 4px 0;border-bottom:1px solid #e7ede6}.colbar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;height:100%}.colbar .bar{min-height:3px;width:min(44px,75%);border-radius:7px 7px 0 0;background:#9db7a6}.colbar .bar.current{background:var(--pine)}.colbar label{font-size:10px;color:#8e9a8f;height:15px}.auditline{padding:13px 0 13px 20px;border-left:2px solid #dce8dd;position:relative}.auditline:before{content:'';position:absolute;left:-6px;top:20px;background:#6da582;border:3px solid #fff;width:10px;height:10px;border-radius:50%}.auditline b{font-size:12px}.auditline p{font-size:12px;color:#89978a;margin:6px 0}.auditline small{font-size:10px;color:#a5ada5}.perm{padding:16px;border-radius:14px;background:#f6f8f3;border:1px solid #ebefe8}.perm b{display:block;font-size:13px;margin-bottom:5px}.perm small{font-size:11px;color:#7c887f;line-height:1.5}.flash{position:fixed;right:24px;bottom:26px;z-index:150;background:var(--pine);color:white;padding:13px 18px;border-radius:13px;font-size:12px;font-weight:650;box-shadow:0 10px 40px #0a251d44}.mobile-top,.bottomnav{display:none}
+.auth{min-height:100vh;display:flex;align-items:stretch;background:#f5f5f0}.authvisual{width:48%;min-height:100vh;overflow:hidden;background:radial-gradient(ellipse at 75% 100%,#438562 0%,#1c523e 40%,#0c2e25 96%);color:white;padding:clamp(28px,5vw,70px);display:flex;flex-direction:column;position:relative}.authvisual .branding{font-size:20px;font-weight:800;display:flex;gap:12px;align-items:center}.authvisual h1{font-size:clamp(46px,5.5vw,81px);letter-spacing:-4px;line-height:1.03;margin:auto 0 22px;max-width:530px}.authvisual h1 em{font-style:normal;color:#c5e0c4}.authvisual p{font-size:17px;color:#d1e1d4;line-height:1.7;max-width:410px}.authvisual footer{color:#b2cfc2;font-size:12px;margin-top:auto;padding-top:70px}.authvisual:after{content:'';position:absolute;left:46%;bottom:-230px;border:80px solid #ffffff0b;width:480px;height:480px;border-radius:50%;pointer-events:none}.authright{flex:1;display:flex;align-items:center;justify-content:center;padding:35px}.authcard{width:min(440px,100%)}.authcard h2{font-size:36px;letter-spacing:-1.6px;margin:0 0 10px}.authcard>p{color:#809085;line-height:1.6;font-size:14px;margin:0 0 34px}.authcard .btn{width:100%;padding:15px}.authcard .field{padding:14px}.authcard .fieldgroup{margin-bottom:17px}.authcard .swap{text-align:center;font-size:12px;color:#809084;margin-top:24px}.authcard .swap button{border:0;background:none;color:var(--green);font-weight:800}.auth-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border-radius:99px;background:#e1eee1;color:#245d40;font-weight:700;font-size:11px;margin:0 0 20px}
+@media(max-width:1150px){.dashboard-grid{grid-template-columns:1.4fr 1fr}.hero-card{grid-row:span 2;min-height:260px}.stat{min-height:120px}.two{grid-template-columns:1fr 1fr}.donutwrap{flex-wrap:wrap}.requestgrid,.commitgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:810px){.side{width:230px;min-width:230px}.main{padding:24px 20px 95px}.two{grid-template-columns:1fr}.donutwrap{flex-wrap:nowrap}.authvisual{width:42%}.authvisual h1{font-size:48px;letter-spacing:-2.6px}}
+@media(max-width:660px){.side{display:none}.main{padding:20px 16px 98px}.mobile-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:23px}.mobile-top .brand{padding:0;font-size:17px}.mobile-top .brand-icon{width:35px;height:35px}.header{display:none}.headline{align-items:start}.headline h1{font-size:29px;letter-spacing:-1.1px}.headline .actions .btn:not(.primary){display:none}.dashboard-grid{grid-template-columns:1fr 1fr;gap:11px}.hero-card{grid-column:1/-1;grid-row:auto;min-height:208px}.stat{min-height:158px;padding:18px;border-radius:16px}.stat .iconbox{width:36px;height:36px;border-radius:11px}.stat h2{font-size:23px}.stat footer{font-size:10px}.hero-card .money{font-size:42px}.hero-card{padding:22px}.two{gap:13px}.panel{padding:18px;border-radius:17px}.donutwrap{gap:12px}.donut{width:142px;height:142px}.donut:before{inset:23px}.donut-center b{font-size:18px}.requestgrid,.commitgrid{grid-template-columns:1fr}.bottomnav{position:fixed;display:flex;align-items:center;justify-content:space-around;bottom:0;left:0;right:0;height:calc(65px + env(safe-area-inset-bottom));padding:0 4px env(safe-area-inset-bottom);background:#fffffff2;backdrop-filter:blur(14px);border-top:1px solid #e9eee8;z-index:50}.bottomnav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:#84918a;font-size:10px;font-weight:650;padding:5px}.bottomnav button.active{color:var(--pine)}.bottomnav button svg{width:20px;height:20px}.bottomnav .center{width:47px;height:47px;border-radius:50%;background:var(--pine);color:white;display:grid;place-items:center;margin-top:-20px;box-shadow:0 8px 15px #12402e2b}.bottomnav .center svg{width:23px;height:23px}.formgrid{grid-template-columns:1fr 1fr}.modal{padding:20px}.authvisual{display:none}.authright{padding:27px}.authcard h2{font-size:31px}.auth{min-height:100dvh}.flash{left:16px;right:16px;bottom:90px;text-align:center}.filters .search{min-width:100%}}
+@media print{.side,.header,.mobile-top,.bottomnav,.actions,.filters,.link,.btn,.no-print{display:none!important}.main{padding:0}.panel,.stat,.hero-card{box-shadow:none!important;break-inside:avoid}.auth{display:none}}
+
+/* Mercy Ledger mobile experience v2 */
+.lang-switcher{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:36px;padding:6px 10px;border:1px solid #dae5da;border-radius:11px;background:#eff4ec;color:#9baaa0;font-size:11px;font-weight:750;letter-spacing:.3px;flex-shrink:0}.lang-switcher .current{color:var(--pine);font-weight:850}.lang-divider{color:#c9d4ca}.side-lang{display:flex;align-items:center;justify-content:space-between;padding:9px 10px 14px;border-bottom:1px solid var(--line);margin-bottom:12px}.side-lang-label{font-size:11px;font-weight:700;color:#78897e}.auth-lang{display:flex;justify-content:flex-end;margin-bottom:24px}.mobile-top-inner{display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px}.mobile-workspace,.mobile-controls{display:flex;align-items:center;gap:8px}.mobile-workspace{padding:4px 0;border:0;background:transparent;text-align:left;color:var(--ink);min-width:0;flex:1}.mobile-workspace>svg{width:15px;height:15px;color:#96a499}.mobile-workspace-icon{display:grid;place-items:center;background:var(--pine);color:white;width:39px;height:39px;flex:none;border-radius:13px}.mobile-workspace-icon svg{width:21px;height:21px}.mobile-workspace-text{min-width:0;display:flex;flex-direction:column;gap:3px}.mobile-workspace-text small{font-size:9px;color:#9baba0;font-weight:800;letter-spacing:1.2px}.mobile-workspace-text strong{font-weight:790;font-size:15px;letter-spacing:-.3px;max-width:min(42vw,240px);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.mobile-more{background:#f0f4ee!important;width:36px;height:36px!important}.mobile-tab{touch-action:manipulation}.mobile-fab{display:none}
+@media (max-width:660px){
+ body{background:#f8faf6}.main{padding:calc(12px + env(safe-area-inset-top)) 15px calc(142px + env(safe-area-inset-bottom));width:100%;max-width:100vw;overflow-x:clip}
+ .mobile-top{position:sticky;top:0;z-index:55;display:flex;margin:-12px -15px 19px;padding:11px 15px 12px;background:rgba(248,250,246,.95);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid #e8eee6}
+ .mobile-top .brand{display:none}.headline{display:flex;align-items:center;gap:8px;margin-bottom:18px}.headline h1{font-size:26px;line-height:1.16;letter-spacing:-1.2px}.headline p{font-size:12px;line-height:1.45;margin-top:6px;color:#91a095}.headline .actions{flex-shrink:0}.headline .actions .btn:not(.primary){display:none}.headline .actions .btn.primary{font-size:0;width:39px;height:39px;border-radius:13px;padding:0}.headline .actions .btn.primary svg{width:20px;height:20px}.headline .actions .btn.primary{display:none}
+ .dashboard-grid{gap:10px;margin-bottom:14px}.hero-card{min-height:181px;padding:21px 21px 20px;border-radius:19px}.hero-card .tiny{font-size:11px}.hero-card .frost{width:30px;height:30px}.hero-card .money{font-size:39px;letter-spacing:-1.5px;margin:20px 0 12px}.hero-card .footer{font-size:11px}.stat{min-height:132px;padding:16px;border-radius:17px}.stat small{font-size:11px}.stat h2{font-size:23px;letter-spacing:-.6px;margin:5px 0}.stat .iconbox{width:31px;height:31px}.stat .iconbox svg{width:16px;height:16px}.stat footer{font-size:10px;padding-top:9px;line-height:1.4}.stat footer strong{font-size:10px}
+ .two{gap:13px;margin-bottom:13px}.panel{padding:16px;border-radius:18px}.panel-head{margin-bottom:14px}.panel-head h3{font-size:15px}.item{gap:10px;padding:12px 0}.itemico{width:36px;height:36px;border-radius:11px}.itemico svg{width:17px;height:17px}.itemmain b{font-size:12px}.itemmain small{font-size:10px;margin-top:5px}.itemamount{font-size:12px}.itemamount small{margin-top:5px}.badge{font-size:10px}
+ .bottomnav{height:calc(65px + env(safe-area-inset-bottom));justify-content:space-between;padding:5px 7px env(safe-area-inset-bottom);background:rgba(255,255,255,.96);box-shadow:0 -8px 30px #1c463116}.bottomnav .mobile-tab{min-width:0;flex:1;min-height:50px;padding:6px 2px;gap:4px;border-radius:10px;font-size:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;white-space:nowrap}.bottomnav .mobile-tab svg{width:20px;height:20px}.bottomnav .mobile-tab.active{color:var(--pine);background:#ecf4ed}.bottomnav .mobile-tab.active:before{display:none}.mobile-fab{display:grid;place-items:center;position:fixed;right:18px;bottom:calc(83px + env(safe-area-inset-bottom));z-index:54;width:49px;height:49px;border:1px solid #2f6a52;color:white;background:#164737;border-radius:15px;box-shadow:0 9px 24px #092c1f38;touch-action:manipulation}.mobile-fab svg{width:23px;height:23px}.mobile-fab:active{transform:scale(.95)}
+ .requestgrid,.commitgrid{grid-template-columns:1fr;gap:12px}.requestcard{border-radius:16px;padding:16px;gap:9px}.requestcard .value{font-size:21px}.donutwrap{min-height:auto}.donut{width:137px;height:137px}.donut:before{inset:23px}.legend-row{margin:9px 0}.callout{border-radius:15px;padding:13px}.callout span{font-size:11px}
+ .formgrid{grid-template-columns:1fr;gap:0}.fieldgroup{margin-bottom:12px}.fieldgroup.full{grid-column:auto}.field{padding:13px 12px;min-height:45px;font-size:16px}.label{font-size:12px}.filters{gap:7px}.filters .search{min-width:100%;height:46px}.search input{font-size:16px}.filters select{width:100%;font-size:14px;min-height:44px}
+ .modalbg{align-items:flex-end;padding:0;overscroll-behavior:contain}.modal{width:100%;max-width:100%;max-height:91dvh;padding:22px 20px calc(22px + env(safe-area-inset-bottom));border-radius:25px 25px 0 0;box-shadow:0 -22px 80px #0c35294d;animation:mercySlide .19s ease-out}.modal:before{content:'';display:block;width:38px;height:4px;border-radius:10px;background:#d6e2d8;margin:-10px auto 17px}.modal h2{font-size:21px}.modal-head{margin-bottom:18px}.modal-foot{position:sticky;bottom:calc(-22px - env(safe-area-inset-bottom));background:#fff;padding-top:13px;padding-bottom:max(7px,env(safe-area-inset-bottom));margin-bottom:-10px;z-index:5}.modal-foot .btn{min-height:46px}.modal-foot .btn.primary{flex:1}.modal .round{width:42px;height:42px}
+ .tablewrap{border:none;overflow:visible;background:transparent}.table,.table tbody{display:block;min-width:0;width:100%}.table thead{display:none}.table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name amount" "beneficiary date" "status action";column-gap:9px;row-gap:9px;margin-bottom:11px;padding:15px;border:1px solid #e8eee6;border-radius:16px;background:white;box-shadow:0 7px 24px #183a3008}.table tbody tr:hover{background:white}.table td{border:none;padding:0;min-width:0;font-size:11px}.table td:nth-child(1){grid-area:name}.table td:nth-child(2){grid-area:beneficiary;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#799083}.table td:nth-child(3){grid-area:date;color:#94a095;text-align:right}.table td:nth-child(4){grid-area:amount;text-align:right;font-size:12px}.table td:nth-child(5){grid-area:status;align-self:center}.table td:nth-child(6){grid-area:action;text-align:right}.table td strong{font-size:13px}.table td small{font-size:10px}
+ .panel:has(.tablewrap){border:0;background:transparent;padding:0;box-shadow:none}.panel:has(.tablewrap) .filters{padding:0 1px}.table .btn.small{min-height:33px}
+ .authright{align-items:center;padding:26px 22px}.authcard{max-width:400px}.authcard h2{font-size:31px}.authcard .field{font-size:16px}.authcard .btn{min-height:48px}.authcard>p{margin-bottom:24px}.auth-lang{margin-bottom:28px}
+}
+@keyframes mercySlide{from{transform:translateY(15px);opacity:.83}to{transform:translateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.modal{animation:none!important}.btn{transition:none!important}}
+.mobile-account{border-top:1px solid var(--line);margin-top:13px;padding-top:13px}.mobile-account .person{padding:8px 11px 14px}.mobile-account .navbtn{color:#ac4f44}.mobile-account .navbtn svg{width:18px;height:18px}
+
+@media(max-width:660px){
+ .hero-card .money{font-size:clamp(27px,8.5vw,39px);overflow-wrap:anywhere}
+ .stat h2{font-size:clamp(17px,5.2vw,23px);overflow-wrap:anywhere}
+ .panel-head{min-width:0}.panel-head h3{min-width:0}
+ .modal form{min-width:0}.modal .formgrid{min-width:0}
+ .bottomnav .mobile-tab span{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+}
+@media(max-width:360px){
+ .mobile-workspace-text strong{font-size:13px;max-width:36vw}
+ .mobile-controls{gap:4px}
+ .mobile-more{width:32px!important;height:32px!important}
+ .lang-switcher{padding:5px 7px;font-size:10px}
+ .bottomnav .mobile-tab{font-size:9px}
+ .hero-card{padding:19px}
+ .hero-card .footer{font-size:10px}
+ .stat{padding:13px}
+}
+.gsc-mark{width:100%;height:100%;object-fit:cover;border-radius:13px}.brand-icon:has(.gsc-mark){background:#f9faf6;color:#153d32;overflow:hidden;box-shadow:0 1px 3px #153d321c}.authvisual .brand-icon:has(.gsc-mark){background:#f9faf6}.brand-icon img{display:block}
+.export-panel{border-color:#d9e9da;background:linear-gradient(145deg,#fbfffa,white);margin-bottom:20px}.export-panel .panel-head small{display:block;color:#89978c;font-size:12px;line-height:1.5;margin-top:5px}.export-grid{display:grid;grid-template-columns:1fr 1fr 1.1fr auto;gap:11px;align-items:end}.export-grid .fieldgroup{margin:0}.export-grid .field{height:46px}.export-download{height:46px}.pdf-private-toggle{display:flex;gap:8px;align-items:center;margin-top:16px;color:#486252;font-size:12px}.pdf-private-toggle input{accent-color:#186344}.export-caption{margin:13px 0 0;font-size:11px}@media(max-width:950px){.export-grid{grid-template-columns:1fr 1fr}.export-download{grid-column:1/-1}}@media(max-width:660px){.export-panel{padding:16px;margin-bottom:16px}.export-grid{grid-template-columns:1fr 1fr;gap:10px}.export-grid .fieldgroup:nth-child(3){grid-column:1/-1}.export-download{grid-column:1/-1;height:48px}}
+.treasury-hero{background:radial-gradient(circle at 95% 105%,#3b7955,#184a39 53%,#10392f);color:white;border-radius:21px;padding:26px 28px;margin-bottom:15px;min-height:194px;box-shadow:0 10px 26px #15432f19}.treasury-hero-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.treasury-hero-top>span:first-child{display:flex;align-items:center;gap:9px;font-size:12px;color:#d4e6d9;font-weight:650}.treasury-count{border-radius:100px;background:#ffffff24;color:#e9f4e9;padding:7px 11px;font-size:10px}.treasury-hero-value{font-size:clamp(33px,4vw,46px);letter-spacing:-1.6px;font-weight:780;margin-top:21px}.treasury-hero-meta{font-size:11px;margin-top:10px;color:#d1dfd5}.treasury-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:17px}.treasury-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:19px}.treasury-stat{background:white;border:1px solid #e8eee8;border-radius:17px;padding:17px;min-width:0}.treasury-stat span{font-size:11px;color:#859388;display:block}.treasury-stat strong{font-size:18px;letter-spacing:-.5px;display:block;margin-top:10px;overflow-wrap:anywhere}.treasury-account-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.treasury-account{border:1px solid #e5ede4;border-radius:16px;padding:17px;background:#fbfdfa;min-width:0}.treasury-account-top{display:flex;align-items:center;justify-content:space-between}.treasury-account .itemico{width:39px;height:39px}.treasury-account h4{font-size:13px;margin:17px 0 8px}.treasury-account strong{display:block;font-size:20px;letter-spacing:-.6px;overflow-wrap:anywhere}.treasury-account small{font-size:11px;display:block;margin-top:5px;color:#809186}.treasury-entry .positive{color:#2b8760}.treasury-entry .negative{color:#b36b53}.treasury-funds-preview{background:#edf5ed;padding:13px 16px;border-radius:14px;margin-bottom:15px;display:flex;align-items:center;justify-content:space-between;gap:10px}.treasury-funds-preview b{color:#15523c;font-size:15px}.treasury-funds-preview small{color:#67866e;font-size:11px}.treasury-linked-note{background:#f3f7f1;border-radius:11px;padding:12px;font-size:12px;color:#536e59;margin-top:10px;line-height:1.5}
+@media(max-width:960px){.treasury-account-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:660px){.treasury-hero{padding:22px;min-height:171px}.treasury-hero-value{font-size:clamp(28px,8vw,39px);margin-top:18px}.treasury-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.treasury-actions .btn{font-size:12px;padding:11px 6px;white-space:normal}.treasury-stat-grid{grid-template-columns:1fr 1fr;gap:9px}.treasury-stat:last-child{grid-column:1/-1}.treasury-stat{padding:13px}.treasury-stat strong{font-size:16px}.treasury-account-grid{grid-template-columns:1fr 1fr;gap:9px}.treasury-account{padding:13px}.treasury-account strong{font-size:17px}.treasury-entry .itemamount{font-size:11px}}
+.treasury-mini{border:1px solid #dceadc;background:#edf5ed;border-radius:17px;display:flex;align-items:center;gap:13px;padding:15px 17px;margin-bottom:16px}.treasury-mini-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#d3e8d7;color:#195439;flex:none}.treasury-mini-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.treasury-mini-main small{font-size:11px;color:#63816b}.treasury-mini-main strong{font-size:19px;letter-spacing:-.6px;color:#164634;overflow-wrap:anywhere}.treasury-mini-main span{font-size:10px;color:#829b85}.treasury-mini .btn{min-height:37px}@media(max-width:660px){.treasury-mini{padding:12px;gap:9px}.treasury-mini-icon{width:36px;height:36px;border-radius:11px}.treasury-mini-main strong{font-size:16px}.treasury-mini .btn{font-size:10px;padding:8px;white-space:normal}.treasury-mini-main span{font-size:9px}}
+/* TX mobile design */
+.app>.main{margin:0 auto;align-self:stretch}
+.tx-page{max-width:1040px;width:100%}
+.tx-tools{display:flex;flex-direction:column;gap:13px;margin-bottom:20px}
+.tx-search{display:flex;align-items:center;gap:10px;width:100%;height:47px;border:1px solid #e1e9e0;border-radius:13px;background:white;padding:0 14px;box-shadow:0 2px 8px #123d3007;color:#829489}
+.tx-search svg{width:18px;height:18px}
+.tx-search input{border:0;outline:0;min-width:0;flex:1;background:transparent;color:var(--ink);font-size:14px;height:100%}
+.tx-search input::placeholder{color:#9aa89d}
+.tx-filters{display:flex;align-items:center;gap:7px;overflow-x:auto;scrollbar-width:none;padding:1px 1px 5px;-webkit-overflow-scrolling:touch}
+.tx-filters::-webkit-scrollbar{display:none}
+.tx-chip{border:1px solid #e2e9e0;background:#fff;color:#748579;white-space:nowrap;border-radius:999px;padding:9px 13px;font-weight:690;font-size:12px;min-height:36px;display:inline-flex;align-items:center;gap:8px;flex-shrink:0}
+.tx-chip span{font-size:10px;color:#91a397;background:#edf3ee;border-radius:99px;min-width:19px;padding:2px 5px;text-align:center}
+.tx-chip.active{background:var(--pine);border-color:var(--pine);color:#fff}
+.tx-chip.active span{background:#ffffff26;color:#fff}
+.tx-list-head{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#829085;margin:0 1px 10px}
+.tx-list-head strong{font-size:12px;color:#63766b;font-weight:750}
+.tx-list-head small{font-size:11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.tx-list{display:grid;gap:9px}
+.tx-entry{border:1px solid #e8eee7;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:white;box-shadow:0 3px 14px #173b2b07;color:var(--ink)}
+.tx-entry:hover{border-color:#c6dccb;background:#fbfdfa}
+.tx-entry-icon{display:grid;place-items:center;width:40px;height:40px;background:#edf4ec;color:#286647;border-radius:13px;flex:none}
+.tx-entry-icon svg{width:18px;height:18px}
+.tx-entry-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.tx-entry-info strong{font-size:13px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx-entry-info small{font-size:11px;color:#8c9a90;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx-sep{margin:0 3px}
+.tx-entry-info .tx-payee{color:#a0ada3}
+.tx-entry-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:7px;min-width:112px;max-width:42%;text-align:right}
+.tx-entry-right>strong{font-size:13px;font-weight:800;overflow-wrap:anywhere}
+.tx-entry-right .badge{font-size:10px;padding:5px 9px}
+.tx-empty{display:flex;align-items:center;flex-direction:column;text-align:center;padding:38px 22px 31px;max-width:500px;margin:2px auto 0}
+.tx-empty-icon{height:59px;width:59px;border-radius:19px;display:grid;place-items:center;background:#e8f1e7;color:var(--pine);margin-bottom:17px}
+.tx-empty-icon svg{width:26px;height:26px}
+.tx-empty strong{font-size:17px;letter-spacing:-.35px;color:#243b2f}
+.tx-empty p{font-size:12px;line-height:1.6;color:#839588;margin:8px 0 19px;max-width:270px}
+.tx-empty .btn{min-height:43px;padding:11px 18px}
+@media(max-width:660px){
+ .app>.main{margin:0 auto!important;align-self:stretch;padding-top:calc(6px + env(safe-area-inset-top))}
+ .tx-page{margin-top:0}
+ .main:has(.tx-page) .headline{margin-bottom:17px}
+ .main:has(.tx-page) .headline h1{font-size:27px}
+ .main:has(.tx-page) .headline p{margin-top:5px;font-size:12px}
+ .tx-tools{gap:12px;margin-bottom:13px}
+ .tx-search{height:44px;padding:0 13px}
+ .tx-search input{font-size:16px}
+ .tx-filters{margin:0 -15px;padding:0 15px 7px;gap:7px}
+ .tx-chip{font-size:11px;padding:8px 12px;min-height:35px}
+ .tx-list-head{margin-bottom:9px}
+ .tx-entry{padding:13px 12px;gap:10px;border-radius:14px}
+ .tx-entry-icon{height:35px;width:35px;border-radius:11px}
+ .tx-entry-info strong{font-size:12px}
+ .tx-entry-info small{font-size:10px}
+ .tx-entry-right{min-width:94px;max-width:46%}
+ .tx-entry-right>strong{font-size:12px}
+ .tx-empty{padding:33px 12px 20px;margin:2px auto 0}
+ .tx-empty-icon{width:54px;height:54px;border-radius:18px;margin-bottom:15px}
+ .tx-empty strong{font-size:16px}
+ .tx-empty p{margin:8px 0 17px}
+ .main:has(.tx-page) .mobile-top{margin-bottom:17px}
+}
+@media(max-width:350px){.tx-entry-icon{display:none}.tx-entry-right{min-width:89px}.tx-entry{gap:8px}}
+
+/* GSC guided walkthrough */
+.gsc-tour-layer{position:fixed;inset:0;z-index:9999;pointer-events:none;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.gsc-tour-blocker{position:fixed;inset:0;z-index:1;pointer-events:auto;background:transparent}
+.gsc-tour-spotlight{position:fixed;z-index:2;pointer-events:none;box-shadow:0 0 0 100vmax rgba(5,26,17,.67);border:2px solid #d3ebd4;border-radius:16px}
+.gsc-tour-card{position:fixed;z-index:3;pointer-events:auto;background:white;color:#17392a;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow-y:auto;border:1px solid #e0ebdf;border-radius:19px;box-shadow:0 25px 65px #071f1644;padding:19px}
+.gsc-tour-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.gsc-tour-top strong{font-size:10px;letter-spacing:1.4px;color:#277450}.gsc-tour-top button{background:#edf5eb;color:#1d6548;border:0;border-radius:8px;padding:8px;font-size:10px;min-height:32px}
+.gsc-tour-progress{height:4px;background:#edf2ea;border-radius:9px;overflow:hidden;margin-bottom:12px}.gsc-tour-progress span{display:block;height:100%;background:#2b865e;border-radius:9px}
+.gsc-tour-count{font-size:11px;color:#8a998c;font-weight:700}.gsc-tour-card h2{font-size:20px;letter-spacing:-.6px;margin:9px 0}.gsc-tour-card p{font-size:13px;color:#728275;line-height:1.6;margin:0 0 19px}
+.gsc-tour-controls{display:flex;align-items:center;justify-content:space-between;gap:8px}.gsc-tour-controls>div{display:flex;align-items:center;gap:7px}
+.gsc-tour-controls button{border:0;border-radius:10px;padding:11px 13px;min-height:43px;font-size:12px;font-weight:750;cursor:pointer}
+.gsc-tour-skip{background:none;color:#8c998e;padding-left:0!important}.gsc-tour-back{background:#edf3eb;color:#2b6849}.gsc-tour-next{background:#174e39;color:white}
+.gsc-tour-launch{display:flex;gap:8px;align-items:center;justify-content:center;width:100%;margin-bottom:10px;border:1px solid #d7e6d8;border-radius:11px;padding:11px;background:#e9f3e8;color:#1e6245;font-size:12px;font-weight:750}
+.gsc-tour-launch svg{height:17px;width:17px}
+@media(max-width:660px){.gsc-tour-card{padding:17px}.gsc-tour-card h2{font-size:18px}.gsc-tour-card p{font-size:12px}.gsc-tour-controls button{min-height:44px}}
+
+/* GSC mobile report refinements 2026-11-02 */
+.export-panel{min-width:0;overflow:hidden;border-color:#e2ebe2;background:#fff;padding:22px;box-shadow:0 5px 26px rgba(20,60,40,.035)}
+.export-panel .panel-head{display:flex;gap:13px;align-items:flex-start;margin:0 0 21px}
+.export-panel .panel-head>div{min-width:0;flex:1}
+.export-panel .panel-head h3{font-size:17px;line-height:1.3;letter-spacing:-.35px;margin:0}
+.export-panel .panel-head small{font-size:12px;line-height:1.45;margin-top:5px;color:#819083}
+.export-panel .panel-head>.badge{font-size:10px;flex:none;letter-spacing:.3px;background:#ecf3ed;color:#286349;border-radius:8px;padding:8px 10px}
+.export-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) minmax(145px,1fr) auto;gap:12px;align-items:end;min-width:0}
+.export-grid .fieldgroup,.export-grid .fieldgroup>*{min-width:0}
+.export-grid .fieldgroup{margin:0}
+.export-grid .label{font-size:11px;font-weight:750;color:#52685a;margin-bottom:7px}
+.export-grid .field{display:block;min-width:0;width:100%;max-width:100%;box-sizing:border-box;border:1px solid #e1e9e1;background:#fbfcfa;border-radius:11px;color:#243b2e;height:47px;min-height:0;padding:0 12px;font-size:15px}
+.export-grid input[type="date"]{-webkit-appearance:none;appearance:none;display:block;width:100%;min-width:0;max-width:100%;height:47px;min-height:47px;line-height:normal;text-align:left;text-align-last:left;padding:0 11px;font-size:15px}
+.export-grid input[type="date"]::-webkit-date-and-time-value{min-height:1em;text-align:left;margin:0}
+.export-grid input[type="date"]::-webkit-datetime-edit{padding:0;white-space:nowrap}
+.export-grid input[type="date"]::-webkit-calendar-picker-indicator{margin:0;padding:0}
+.export-grid select.field{font-size:14px}
+.export-download{height:47px;min-height:47px;white-space:nowrap;padding:0 16px}
+.pdf-private-toggle{margin-top:15px;display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.45;color:#546b5b}
+.pdf-private-toggle input{flex:none;width:17px;height:17px;margin:1px 0 0}
+.export-caption{font-size:11px;line-height:1.5;color:#8b988e;margin:13px 0 0}
+@media (max-width:1050px){.export-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.export-grid .fieldgroup:nth-child(3){grid-column:1/3}.export-download{grid-column:1/3}}
+@media (max-width:660px){
+ .main{min-width:0;overflow-x:clip;padding-left:16px;padding-right:16px}
+ .headline{margin-bottom:16px}
+ .headline h1{font-size:clamp(23px,6.6vw,28px);letter-spacing:-.9px}
+ .headline p{line-height:1.45;font-size:12px;max-width:40ch}
+ .export-panel{padding:17px 16px;margin-bottom:14px;border-radius:18px;overflow:hidden}
+ .export-panel .panel-head{margin-bottom:17px;gap:8px}
+ .export-panel .panel-head h3{font-size:16px}
+ .export-panel .panel-head small{font-size:11px;line-height:1.45;max-width:28ch}
+ .export-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;width:100%;min-width:0}
+ .export-grid .fieldgroup,.export-grid .fieldgroup:nth-child(3){grid-column:1/-1;display:grid;grid-template-columns:61px minmax(0,1fr);align-items:center;gap:11px;width:100%;max-width:100%;min-width:0;margin:0}
+ .export-grid .fieldgroup .label{min-width:0;margin:0;font-size:12px;line-height:1.25;color:#526657}
+ .export-grid .fieldgroup .field{min-width:0;width:100%;max-width:100%;height:46px;min-height:46px;padding:0 11px;font-size:15px;box-sizing:border-box;border-radius:11px}
+ .export-grid input[type="date"]{min-width:0!important;width:100%!important;max-width:100%!important;height:46px!important;min-height:46px!important;padding:0 11px!important;font-size:15px!important}
+ .export-grid .export-download{grid-column:1/-1;width:100%;min-height:47px;height:47px;margin:2px 0 0;font-size:13px;letter-spacing:0}
+ .pdf-private-toggle{font-size:11px;margin-top:15px;align-items:flex-start}
+ .export-caption{font-size:10px;line-height:1.55;margin-top:11px}
+ .bottomnav .mobile-tab{min-width:0}
+ .bottomnav .mobile-tab span{font-size:10px;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+ .treasury-mini{border-radius:15px}
+}
+@media (max-width:360px){
+ .export-panel{padding:14px 12px}
+ .export-grid .fieldgroup,.export-grid .fieldgroup:nth-child(3){grid-template-columns:49px minmax(0,1fr);gap:9px}
+ .export-grid input[type="date"],.export-grid .fieldgroup .field{font-size:14px!important}
+ .bottomnav .mobile-tab span{font-size:9px}
+}
+</style></head>
+<body><div id="root"><div class="auth"><div class="authvisual"><div class="branding"><span class="brand-icon"><img class="gsc-mark" src="/app-icon-192.png" alt=""></span> GSC Ledger</div><h1>All your spending.<br><em>Clearly organized.</em></h1><p>Expenses, requests and reports across teams, offices and personal workspaces.</p><footer>Separate workspaces · Clear records</footer></div><div class="authright"><div class="authcard"><div class="auth-tag">✦ Expenses and requests, organized</div><h2>Welcome</h2><p>Opening your workspace…</p></div></div></div></div><div id="modalRoot"></div><div id="toast" class="flash hidden"></div>
+<script>
+(function(){
+'use strict';
+const root=document.getElementById('root'),modalRoot=document.getElementById('modalRoot'),toastBox=document.getElementById('toast');
+const paths={grid:'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z',wallet:'M3 6h18v14H3z M3 6V4h15 M16 13h5 M4 10h17',heart:'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z',plus:'M12 5v14 M5 12h14',chev:'M9 18l6-6-6-6',down:'M6 9l6 6 6-6',lock:'M5 11h14v10H5z M8 11V7a4 4 0 0 1 8 0v4',layers:'M12 2l9 5-9 5-9-5z M3 12l9 5 9-5 M3 17l9 5 9-5',pie:'M21 12a9 9 0 1 1-9-9v9z M13 3a8 8 0 0 1 8 8h-8z',repeat:'M17 2l4 4-4 4 M3 11V9a3 3 0 0 1 3-3h15 M7 22l-4-4 4-4 M21 13v2a3 3 0 0 1-3 3H3',users:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',receipt:'M4 3h16v18l-4-2-4 2-4-2-4 2z M8 8h8 M8 12h8',clock:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18 M12 7v6l4 2',shield:'M12 2 20 6v6c0 5-3 8-8 10-5-2-8-5-8-10V6z M9 12l2 2 4-4',file:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M8 13h8 M8 17h8',settings:'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6 M4 12l-2-2 2-4 3 1 2-3h6l2 3 3-1 2 4-2 2 2 2-2 4-3-1-2 3H9l-2-3-3 1-2-4z',logout:'M10 17l5-5-5-5 M15 12H3 M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6',search:'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16 M21 21l-4.3-4.3',download:'M12 3v12 M7 10l5 5 5-5 M4 17v4h16v-4',calendar:'M4 6h16v15H4z M8 3v6 M16 3v6 M4 11h16',check:'M5 12l4 4L19 6',x:'M5 5l14 14 M19 5 5 19',arrow:'M4 12h16 M14 6l6 6-6 6',spark:'M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z',menu:'M4 7h16 M4 12h16 M4 17h16',eye:'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6',info:'M12 17v-5 M12 8h.01 M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20'};
+function ico(k){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+(paths[k]||paths.grid)+'"/></svg>';}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmt(c){let x=Number(c||0)/100;return new Intl.NumberFormat(S.lang==='fr'?'fr-FR':'en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).format(x);}
+function mon(c){return fmt(c)+' '+(group()?.currency||'TND');}
+function niceDate(x){if(!x)return '—';let d=new Date(x.length===10?x+'T12:00:00':x);return Number.isNaN(+d)?x:d.toLocaleDateString(S.lang==='fr'?'fr-FR':'en-GB',{day:'numeric',month:'short',year:'numeric'});}
+function monthLabel(m){return new Date(m+'-01T12:00:00').toLocaleDateString(S.lang==='fr'?'fr-FR':'en-US',{month:'long',year:'numeric'});}
+const S={user:null,data:null,page:'overview',groupId:'',search:'',status:'all',month:new Date().toISOString().slice(0,7),auth:'login',setup:false,invite:new URLSearchParams(location.search).get('invite')||'',inviteInfo:null,modal:null,viewAll:false,lang:(()=>{try{let x=localStorage.getItem("mercy-ledger-language");return x==="fr"||x==="en"?x:(navigator.language||"en").toLowerCase().startsWith("fr")?"fr":"en";}catch(e){return "en";}})()};
+const api=async(path,data)=>{let opt=data===undefined?{}:{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)};let r=await fetch('/api/'+path,opt),v=await r.json().catch(()=>({error:'Unexpected response'}));if(!r.ok)throw new Error(v.error||'Request failed');return v;};
+const group=()=>S.data?.groups.find(x=>x.id===S.groupId)||null;
+const role=()=>group()?.role||'viewer',can=(min)=>({viewer:1,editor:2,controller:3,owner:4}[role()]>=({viewer:1,editor:2,controller:3,owner:4}[min]));
+const records=(name)=>S.data?.[name]?.filter(x=>x.group_id===S.groupId)||[];
+function flash(message,bad){toastBox.textContent=message;toastBox.style.background=bad?'#a4483d':'#153d32';toastBox.classList.remove('hidden');setTimeout(()=>toastBox.classList.add('hidden'),3800);}
+async function refresh(reset){let d=await api('data');S.data=d;S.user=d.user;if(reset||!d.groups.some(x=>x.id===S.groupId)){let saved='';try{saved=localStorage.getItem('mercy-ledger-group-'+d.user.id)||'';}catch(error){}S.groupId=d.groups.find(x=>x.id===saved)?.id||d.groups[0]?.id||'';}render();maybeStartTour();}
+function titleFor(p){return {overview:'Overview',treasury:'Treasury',expenses:'Transactions',requests:'Requests',commitments:'Recurring expenses',reports:'Reports & insights',team:'People & access',audit:'Activity log',settings:'Workspace settings'}[p]||'Overview';}
+const navs=[['overview','grid','Overview'],['treasury','wallet','Treasury'],['expenses','wallet','Transactions'],['requests','file','Requests'],['commitments','repeat','Recurring expenses'],['reports','pie','Reports'],['team','users','Team & access'],['audit','shield','Audit trail'],['settings','settings','Settings']];
+function pill(s){return '<span class="badge '+esc(s)+'">'+esc(s.replaceAll('_',' '))+'</span>';}
+function empty(title,desc,k='file'){return '<div class="empty"><div class="empty-icon">'+ico(k)+'</div><b>'+esc(title)+'</b><p>'+esc(desc)+'</p></div>';}
+function navbtn(n){return '<button class="navbtn '+(S.page===n[0]?'active':'')+'" data-page="'+n[0]+'">'+ico(n[1])+esc(n[2])+'</button>';}
+function side(){let gs=S.data.groups.map(g=>'<button class="group-item '+(g.id===S.groupId?'selected':'')+'" data-group="'+esc(g.id)+'"><span class="emblem">'+ico(g.icon==='heart'?'heart':'layers')+'</span><span class="name">'+esc(g.name)+'</span><span class="tinylock">'+ico('lock')+'</span></button>').join('');
+return '<aside class="side"><div class="brand"><span class="brand-icon"><img class=\"gsc-mark\" src=\"/app-icon-192.png\" alt=\"\"></span><div>GSC Ledger<small>FINANCES, ORGANIZED</small></div></div><div class="minor">Workspaces</div>'+gs+'<button class="navbtn" data-modal="group">'+ico('plus')+' New workspace</button><div class="minor">Manage</div><nav class="nav">'+navs.map(navbtn).join('')+'</nav><div class="sidefooter"><button class="gsc-tour-launch" data-action="startTour">Take a tour</button><div class="help-card">'+ico('shield')+' <b>All your expenses, in one place</b><p>Manage records, approvals and reports across separate workspaces.</p></div><div class="person"><span class="avatar">'+esc(S.user.name.slice(0,1).toUpperCase())+'</span><span class="person-name"><b>'+esc(S.user.name)+'</b><small>'+esc(S.user.email)+'</small></span><button class="round" title="Sign out" data-action="logout">'+ico('logout')+'</button></div></div></aside>';}
+function mobile(){
+ const g=group();
+ const items=[['overview','grid','Home'],['treasury','wallet','Treasury'],['expenses','receipt','Expenses'],['reports','pie','Reports']];
+ return '<div class="mobile-top"><div class="mobile-top-inner"><button type="button" class="mobile-workspace" data-modal="switchgroup" aria-label="Switch workspace"><span class="mobile-workspace-icon">'+ico(g?.icon==='heart'?'heart':'layers')+'</span><span class="mobile-workspace-text"><small>WORKSPACE</small><strong>'+esc(g?.name||'Omni Ledger')+'</strong></span>'+ico('down')+'</button><div class="mobile-controls"><button type="button" class="lang-switcher mobile-language" data-language aria-label="Switch language"><span class="'+(S.lang==='en'?'current':'')+'">EN</span><span class="lang-divider">/</span><span class="'+(S.lang==='fr'?'current':'')+'">FR</span></button><button type="button" class="round mobile-more" data-modal="more" aria-label="More">'+ico('menu')+'</button></div></div></div>'
+ +'<nav class="bottomnav" aria-label="Primary navigation">'+items.map(n=>'<button class="mobile-tab '+(S.page===n[0]?'active':'')+'" data-page="'+n[0]+'" '+(S.page===n[0]?'aria-current="page"':'')+'>'+ico(n[1])+'<span>'+n[2]+'</span></button>').join('')+'<button class="mobile-tab '+(['requests','commitments','team','audit','settings'].includes(S.page)?'active':'')+'" data-modal="more">'+ico('menu')+'<span>More</span></button></nav>'
+ +(can('editor')&&['overview','expenses','requests'].includes(S.page)?'<button class="mobile-fab" data-modal="'+(S.page==='expenses'?'expense':S.page==='treasury'?'treasuryDeposit':S.page==='requests'?'request':'quick')+'" aria-label="Add new record">'+ico('plus')+'</button>':'');
+}
+function heading(sub){return '<div class="header"><div class="crumb">Workspaces / <strong>'+esc(group()?.name||'')+'</strong> / '+esc(titleFor(S.page))+'</div><div class="actions"><span style="color:#8b998e;font-size:12px">'+niceDate(new Date().toISOString())+'</span><span class="avatar">'+esc(S.user.name[0]||'M')+'</span></div></div><div class="headline"><div><h1>'+titleFor(S.page)+'</h1><p>'+sub+'</p></div><div class="actions">'+(S.page==='reports'?'<button class="btn" data-action="csv">'+ico('download')+' Export CSV</button>':'')+(can('editor')&&['overview','expenses','requests','commitments'].includes(S.page)?'<button class="btn primary" data-modal="quick">'+ico('plus')+' New record</button>':'')+'</div></div>';}
+function overview(){let ex=records('expenses'),paid=ex.filter(x=>x.status==='paid'&&x.expense_date.slice(0,7)===S.month),pending=ex.filter(x=>x.status==='pending'),approved=ex.filter(x=>x.status==='approved'),spend=paid.reduce((s,x)=>s+x.amount_cents,0),due=records('commitments').filter(x=>x.active),need=records('requests').filter(x=>x.status==='waiting'||x.status==='approved');
+let recent=ex.slice(0,5);
+return heading('Your workspace at a glance · '+monthLabel(S.month))+treasurySummary()+'<div class="dashboard-grid"><div class="hero-card"><div class="tiny"><span class="frost">'+ico('wallet')+'</span> Total paid this month</div><div class="money">'+fmt(spend)+' <small>'+esc(group()?.currency||'TND')+'</small></div><div class="footer">'+ico('shield')+' <strong>Verified payments only</strong> · '+paid.length+' recorded</div></div><div class="stat"><div class="stat-top"><small>Awaiting approval</small><span class="iconbox">'+ico('clock')+'</span></div><h2>'+pending.length+'</h2><footer><strong>'+mon(pending.reduce((s,x)=>s+x.amount_cents,0))+'</strong> submitted</footer></div><div class="stat"><div class="stat-top"><small>Approved, not paid</small><span class="iconbox">'+ico('check')+'</span></div><h2>'+mon(approved.reduce((s,x)=>s+x.amount_cents,0))+'</h2><footer>'+approved.length+' awaiting confirmation</footer></div></div>'+
+'<div class="two"><section class="panel"><div class="panel-head"><h3>Recent transactions</h3><button class="link" data-page="expenses">All transactions '+ico('arrow')+'</button></div>'+ (recent.length?recent.map(x=>'<div class="item clickable" data-detail="expense:'+esc(x.id)+'"><span class="itemico">'+ico('receipt')+'</span><div class="itemmain"><b>'+esc(x.title)+'</b><small>'+esc(x.category)+' · '+niceDate(x.expense_date)+'</small></div><div class="itemamount">'+mon(x.amount_cents)+'<small>'+pill(x.status)+'</small></div></div>').join(''):empty('Your ledger starts here','Submit your first expense to begin an auditable history.','receipt'))+'</section>'+
+'<section class="panel"><div class="panel-head"><h3>Where the money went</h3><button class="link" data-page="reports">Spending report '+ico('arrow')+'</button></div>'+donut(paid)+'</section></div>'+
+'<div class="two"><section class="panel"><div class="panel-head"><h3>Upcoming commitments</h3><button class="link" data-page="commitments">View schedule '+ico('arrow')+'</button></div>'+ (due.length?due.slice(0,3).map(x=>'<div class="item"><span class="itemico">'+ico('repeat')+'</span><div class="itemmain"><b>'+esc(x.title)+'</b><small>Due '+niceDate(x.next_due)+' · '+esc(x.frequency)+'</small></div><div class="itemamount">'+mon(x.amount_cents)+'</div></div>').join(''):empty('No upcoming payments','Add bills or scheduled expenses to stay ahead.','calendar'))+'</section>'+
+'<section class="panel"><div class="panel-head"><h3>Requests & queue</h3><button class="link" data-page="requests">See requests '+ico('arrow')+'</button></div>'+ (need.length?need.slice(0,3).map(x=>'<div class="item"><span class="itemico">'+ico('file')+'</span><div class="itemmain"><b>'+esc(x.title)+'</b><small>'+esc(x.priority)+' priority · '+niceDate(x.due_date)+'</small></div><div>'+pill(x.status)+'</div></div>').join(''):empty('All caught up','Add planned purchases or requests, approve them and link them to expenses.','file'))+'</section></div><div class="callout">'+ico('shield')+'<span><b>Clear records, better decisions.</b> Paid transactions count towards spending. Requests and approvals remain separate until payment.</span></div>';
+}
+const palette=['#153d32','#287f5a','#82b49a','#accdb9','#d1e1cf','#e8f0e4'];
+function breakdown(paid){let map={};paid.forEach(x=>map[x.category]=(map[x.category]||0)+x.amount_cents);return Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,6);}
+function donut(paid){let arr=breakdown(paid),total=paid.reduce((s,x)=>s+x.amount_cents,0);if(!total)return empty('Ready for your first report','The breakdown appears once a payment is confirmed.','pie');let angle=0,stops=arr.map((x,i)=>{let from=angle;angle+=100*x[1]/total;return palette[i%palette.length]+' '+from.toFixed(2)+'% '+angle.toFixed(2)+'%';});
+return '<div class="donutwrap"><div class="donut" style="background:conic-gradient('+stops.join(',')+')"><div class="donut-center"><b>'+fmt(total)+'</b><small>'+esc(group()?.currency||'TND')+' spent</small></div></div><div class="legend">'+arr.map((x,i)=>'<div class="legend-row"><span class="dot" style="background:'+palette[i%palette.length]+'"></span><span>'+esc(x[0])+'</span><b>'+Math.round(100*x[1]/total)+'%</b></div>').join('')+'</div></div>';}
+function expenseResultsMarkup(all){
+ const query=S.search.trim().toLowerCase();
+ const list=all.filter(x=>(S.status==='all'||x.status===S.status)&&(!query||[x.title,x.beneficiary,x.category,x.reference].join(' ').toLowerCase().includes(query)));
+ const entries=list.map(x=>'<button type="button" class="tx-entry" data-detail="expense:'+esc(x.id)+'" aria-label="'+esc(x.title)+' · '+mon(x.amount_cents)+'"><span class="tx-entry-icon">'+ico('receipt')+'</span><span class="tx-entry-info"><strong>'+esc(x.title)+'</strong><small>'+esc(x.category)+' <span class="tx-sep">·</span> '+niceDate(x.expense_date)+'</small>'+(x.beneficiary?'<small class="tx-payee">'+esc(x.beneficiary)+'</small>':'')+'</span><span class="tx-entry-right"><strong>'+mon(x.amount_cents)+'</strong>'+pill(x.status)+'</span></button>').join('');
+ const noResults='<div class="tx-empty tx-no-results"><span class="tx-empty-icon">'+ico('search')+'</span><strong>No matching transactions</strong><p>Try another search or status.</p><button class="btn soft small" type="button" data-action="txClear">Clear filters</button></div>';
+ return '<div class="tx-list-head"><strong>'+list.length+' '+(list.length===1?t('transaction'):t('transactions'))+'</strong><small>'+esc(group()?.name||'')+'</small></div>'+(list.length?'<div class="tx-list">'+entries+'</div>':noResults);
+}
+function expensesPage(){
+ const all=records('expenses');
+ const statusNames={all:'All',pending:'Pending',approved:'Approved',paid:'Paid',rejected:'Rejected'};
+ const pills=['all','pending','approved','paid','rejected'];
+ const count=k=>k==='all'?all.length:all.filter(x=>x.status===k).length;
+ const filters='<div class="tx-tools"><label class="tx-search">'+ico('search')+'<input id="expenseSearch" type="search" autocomplete="off" placeholder="Search transactions" aria-label="Search transactions" value="'+esc(S.search)+'"></label><div class="tx-filters" role="group" aria-label="Filter by status">'+pills.map(k=>'<button type="button" class="tx-chip '+(S.status===k?'active':'')+'" data-expense-filter="'+k+'" aria-pressed="'+(S.status===k?'true':'false')+'">'+statusNames[k]+'<span>'+count(k)+'</span></button>').join('')+'</div></div>';
+ const emptyState='<div class="tx-empty tx-first"><span class="tx-empty-icon">'+ico('receipt')+'</span><strong>No transactions yet</strong><p>Record your first expense and follow it from review to payment.</p>'+(can('editor')?'<button type="button" class="btn primary tx-start" data-modal="expense">'+ico('plus')+' Add expense</button>':'')+'</div>';
+ return heading('All your expenses, organized in one place.')+'<div class="tx-page">'+(all.length===0?emptyState:filters+'<div id="txResults">'+expenseResultsMarkup(all)+'</div>')+'</div>';
+}
+
+function requestsPage(){let a=records('requests');return heading('Capture upcoming purchases, reimbursements and requests, then track each decision.')+'<div class="requestgrid">'+(a.length?a.map(x=>'<div class="requestcard"><div class="split">'+pill(x.status)+pill(x.priority)+'</div><h3>'+esc(x.title)+'</h3><span class="desc">'+esc(x.beneficiary||'Not assigned')+'</span><div class="value">'+mon(x.amount_cents)+'</div><div class="desc">Due '+niceDate(x.due_date)+'<br>'+esc(x.notes||'No additional notes')+'</div><div class="bottom">'+(x.status==='waiting'&&can('controller')?'<button class="btn small soft" data-action="requestApprove" data-id="'+x.id+'">'+ico('check')+' Approve</button><button class="btn small danger" data-action="requestReject" data-id="'+x.id+'">Decline</button>':'')+(x.status==='approved'&&can('editor')?'<button class="btn small primary" data-record-request="'+x.id+'">Record expense</button>':'')+'</div></div>').join(''):empty('No requests yet','Track planned purchases, reimbursements, supplies and other requests.','file'))+'</div>'+(can('editor')?'<div style="margin-top:20px"><button class="btn primary" data-modal="request">'+ico('plus')+' Add a request</button></div>':'');}
+function commitmentsPage(){let a=records('commitments');return heading('Keep bills, subscriptions and other recurring payments on schedule.')+'<div class="commitgrid">'+(a.length?a.map(x=>{let ref='commitment:'+x.id+':'+x.next_due,existing=records('expenses').some(e=>e.reference===ref&&e.status!=='rejected');return '<div class="requestcard"><div class="split">'+pill(x.active?'active':'inactive')+'<span class="badge">'+esc(x.frequency)+'</span></div><h3>'+esc(x.title)+'</h3><span class="desc">'+esc(x.beneficiary||x.category)+'</span><div class="value">'+mon(x.amount_cents)+'</div><div class="desc">Next due: <b>'+niceDate(x.next_due)+'</b></div><div class="bottom">'+(x.active&&can('editor')&&!existing?'<button class="btn small primary" data-record-commit="'+x.id+'">Record payment</button>':'')+(existing?'<span class="badge pending">Recorded for review</span>':'')+(x.active&&can('controller')?'<button class="btn small ghost" data-action="stopCommit" data-id="'+x.id+'">Stop</button>':'')+'</div></div>';}).join(''):empty('No recurring expenses yet','Schedule rent, subscriptions, payroll and any repeating expense.','repeat'))+'</div>'+(can('editor')?'<div style="margin-top:20px"><button class="btn primary" data-modal="commitment">'+ico('plus')+' Add commitment</button></div>':'')+'<div class="callout" style="margin-top:23px">'+ico('info')+'<span>Recurring commitments do not automatically count as spending. Confirm each actual payment after review to advance the schedule.</span></div>';}
+
+function reportExportPanel(){
+ const today=new Date().toISOString().slice(0,10);
+ const yearStart=new Date().getFullYear()+'-01-01';
+ return '<section class="panel export-panel"><div class="panel-head"><div><h3>Export financial report</h3><small>A4 PDF · Summary, categories and transactions</small></div><span class="badge">PDF</span></div>'
+ +'<div class="export-grid"><div class="fieldgroup"><label class="label">From</label><input id="pdfFrom" class="field" type="date" value="'+yearStart+'"></div>'
+ +'<div class="fieldgroup"><label class="label">To</label><input id="pdfTo" class="field" type="date" value="'+today+'"></div>'
+ +'<div class="fieldgroup"><label class="label">Include</label><select class="field" id="pdfStatus"><option value="all">All transactions</option><option value="paid">Paid only</option><option value="pending">Pending only</option><option value="approved">Approved only</option><option value="rejected">Rejected only</option></select></div>'
+ +'<button class="btn primary export-download" data-action="pdf">'+ico('download')+' Download PDF</button></div>'
+ +(can('controller')?'<label class="pdf-private-toggle"><input id="pdfPrivate" type="checkbox"> Include recipient names (restricted report)</label>':'')
+ +'<p class="note export-caption">Includes a financial summary, category breakdown and detailed transaction register. Recipient details are private by default.</p></section>';
+}
+async function downloadReport(){
+ const from=document.getElementById('pdfFrom')?.value||'2020-01-01',to=document.getElementById('pdfTo')?.value||new Date().toISOString().slice(0,10),status=document.getElementById('pdfStatus')?.value||'all';
+ if(from>to){flash(t('Choose a valid date range.'),true);return;}
+ const params=new URLSearchParams({group_id:S.groupId,from,to,status,lang:S.lang||'en'});
+ if(document.getElementById('pdfPrivate')?.checked&&can('controller'))params.set('private','1');
+ try{
+  const response=await fetch('/api/report/pdf?'+params,{credentials:'same-origin'});
+  if(!response.ok){const v=await response.json().catch(()=>({error:'Report could not be generated'}));throw new Error(v.error||'Report could not be generated');}
+  const blob=await response.blob();
+  if(blob.size<150)throw new Error('Invalid PDF document');
+  const href=URL.createObjectURL(blob),a=document.createElement('a');a.href=href;a.download='GSC-Ledger-'+from+'-'+to+'.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(href),30000);
+  flash(t('PDF report downloaded'));
+ }catch(error){flash(error.message,true);}
+}
+
+
+function treasuryAccounts(){return (S.data?.treasuryAccounts||[]).filter(x=>x.group_id===S.groupId);}
+function treasuryEntries(){return (S.data?.treasuryEntries||[]).filter(x=>x.group_id===S.groupId);}
+function treasuryBalance(){return treasuryAccounts().reduce((s,a)=>s+Number(a.balance_cents||0),0);}
+function accountSelect(name,label,selected='',exclude=''){
+ const opts=treasuryAccounts().filter(x=>x.active&&x.id!==exclude);
+ return '<div class="fieldgroup"><label class="label" for="'+name+'">'+esc(label)+'</label><select class="field" name="'+name+'" id="'+name+'" required><option value="">Select account</option>'+opts.map(a=>'<option value="'+esc(a.id)+'" '+(a.id===selected?'selected':'')+'>'+esc(a.name)+' ('+mon(a.balance_cents)+')</option>').join('')+'</select></div>';
+}
+
+function treasurySummary(){
+ const accounts=treasuryAccounts(),available=treasuryBalance(),has=accounts.length>0;
+ return '<section class="treasury-mini"><div class="treasury-mini-icon">'+ico('wallet')+'</div><div class="treasury-mini-main"><small>Treasury balance</small><strong>'+(has?mon(available):'Not tracked yet')+'</strong><span>'+(has?accounts.length+' accounts · available funds':'Set up accounts to see money available')+'</span></div>'+
+ (has?'<button class="btn small soft" data-page="treasury">View treasury '+ico('arrow')+'</button>':can('controller')?'<button class="btn small primary" data-modal="treasuryAccount">Set up treasury '+ico('plus')+'</button>':'<button class="btn small soft" data-page="treasury">Treasury '+ico('arrow')+'</button>')+'</section>';
+}
+
+function treasuryPage(){
+ const accounts=treasuryAccounts(),entries=treasuryEntries(),stats=(S.data.treasuryTotals||[]).filter(x=>x.group_id===S.groupId);
+ const sum=k=>stats.filter(x=>x.kind===k).reduce((n,x)=>n+Number(x.total_cents||0),0);
+ const income=sum('deposit')+sum('opening'),expense=-sum('expense'),withdraw=-sum('withdrawal'),available=treasuryBalance();
+ return heading('Track money available across cash, bank and other treasury accounts.')+
+ '<section class="treasury-hero"><div class="treasury-hero-top"><span>'+ico('wallet')+' Available funds</span><span class="treasury-count">'+accounts.length+' accounts</span></div><div class="treasury-hero-value">'+mon(available)+'</div><div class="treasury-hero-meta">Current recorded balance across this workspace · '+esc(group()?.currency||'TND')+'</div></section>'+
+ '<div class="treasury-actions">'+(can('controller')?'<button class="btn primary" data-modal="treasuryDeposit">'+ico('plus')+' Money in</button><button class="btn soft" data-modal="treasuryWithdrawal">'+ico('wallet')+' Money out</button><button class="btn" data-modal="treasuryTransfer">'+ico('repeat')+' Transfer</button><button class="btn" data-modal="treasuryAccount">'+ico('plus')+' Account</button>':'<span class="note">Read-only treasury overview</span>')+'</div>'+
+ '<div class="treasury-stat-grid"><div class="treasury-stat"><span>Money received / opening</span><strong>'+mon(income)+'</strong></div><div class="treasury-stat"><span>Paid expenses</span><strong>'+mon(expense)+'</strong></div><div class="treasury-stat"><span>Other withdrawals</span><strong>'+mon(withdraw)+'</strong></div></div>'+
+ '<section class="panel"><div class="panel-head"><h3>Treasury accounts</h3>'+(can('controller')?'<button class="link" data-modal="treasuryAccount">'+ico('plus')+' Add account</button>':'')+'</div>'+
+ (accounts.length?'<div class="treasury-account-grid">'+accounts.map(a=>'<article class="treasury-account"><div class="treasury-account-top"><span class="itemico">'+ico(a.type==='cash'?'wallet':a.type==='bank'?'layers':'grid')+'</span><span class="badge">'+esc(a.type)+'</span></div><h4>'+esc(a.name)+'</h4><strong>'+mon(a.balance_cents)+'</strong><small>'+esc(group()?.currency||'TND')+' · '+(a.active?'Active':'Inactive')+'</small></article>').join('')+'</div>':empty('No treasury accounts yet','Add a cash box or bank account with its opening balance to start tracking funds.','wallet'))+'</section>'+
+ '<section class="panel" style="margin-top:16px"><div class="panel-head"><h3>Treasury activity</h3><small>Latest recorded movements</small></div>'+
+ (entries.length?entries.slice(0,150).map(e=>'<div class="item treasury-entry"><span class="itemico">'+ico(e.kind==='deposit'||e.kind==='opening'?'plus':e.kind==='expense'?'receipt':e.kind==='transfer_in'||e.kind==='transfer_out'?'repeat':'wallet')+'</span><div class="itemmain"><b>'+esc(e.title)+'</b><small>'+esc(e.account_name)+' · '+niceDate(e.entry_date)+' · '+esc(e.kind.replaceAll('_',' '))+'</small></div><div class="itemamount '+(e.delta_cents>0?'positive':'negative')+'">'+(e.delta_cents>0?'+':'−')+mon(Math.abs(e.delta_cents))+'</div></div>').join(''):empty('No treasury movements','Add funds, record a withdrawal, or transfer between accounts.','wallet'))+'</section>'+
+ '<div class="callout" style="margin-top:15px">'+ico('info')+'<span><b>How available funds work</b> Opening balances + deposits − withdrawals − paid expenses. Transfers move money between accounts without changing the total. Historical paid expenses are not automatically deducted; only payments linked after treasury setup affect these balances. Treasury withdrawals are not counted as expenses in spending reports.</span></div>';
+}
+
+function reportPage(){let paid=records('expenses').filter(x=>x.status==='paid'),sum=paid.reduce((s,x)=>s+x.amount_cents,0),arr=breakdown(paid),months={};paid.forEach(x=>months[x.expense_date.slice(0,7)]=(months[x.expense_date.slice(0,7)]||0)+x.amount_cents);let keys=Object.keys(months).sort().slice(-6),max=Math.max(1,...Object.values(months));return heading('Explore spending patterns, trends and approvals for this workspace.')+reportExportPanel()+(treasuryAccounts().length?treasurySummary():'')+'<div class="dashboard-grid"><div class="hero-card"><div class="tiny">'+ico('pie')+' Lifetime confirmed spending</div><div class="money">'+fmt(sum)+' <small>'+esc(group()?.currency||'TND')+'</small></div><div class="footer">'+ico('check')+' '+paid.length+' confirmed payments · '+arr.length+' categories</div></div><div class="stat"><div class="stat-top"><small>Items awaiting approval</small><span class="iconbox">'+ico('clock')+'</span></div><h2>'+records('expenses').filter(x=>x.status==='pending').length+'</h2><footer>Not included in totals</footer></div><div class="stat"><div class="stat-top"><small>Requests settled</small><span class="iconbox">'+ico('file')+'</span></div><h2>'+records('requests').filter(x=>x.status==='funded').length+'</h2><footer>Linked to paid expenses</footer></div></div>'+
+'<div class="two"><section class="panel"><div class="panel-head"><h3>Spending categories</h3><small>Paid records only</small></div>'+donut(paid)+'</section><section class="panel"><div class="panel-head"><h3>Monthly spending</h3><small>Confirmed transactions</small></div>'+(keys.length?'<div class="monthly-chart">'+keys.map((x,i)=>'<div class="colbar" title="'+esc(monthLabel(x))+' · '+mon(months[x])+'"><div class="bar '+(i===keys.length-1?'current':'')+'" style="height:'+Math.max(2,Math.round(months[x]/max*160))+'px"></div><label>'+esc(new Date(x+'-01').toLocaleDateString('en-US',{month:'short'}))+'</label></div>').join('')+'</div>':empty('No spending trend yet','Charts appear after payments are confirmed.','pie'))+'</section></div>'+
+'<section class="panel"><div class="panel-head"><h3>Category breakdown</h3><div class="actions"><button class="btn small" data-action="csv">'+ico('download')+' Download CSV</button><button class="btn small" data-action="pdf">'+ico('file')+' Download PDF</button></div></div>'+(arr.length?arr.map((x,i)=>'<div class="barrow"><label>'+esc(x[0])+'</label><div class="track"><div class="fill" style="width:'+100*x[1]/sum+'%;background:'+palette[i%palette.length]+'"></div></div><b>'+mon(x[1])+'</b></div>').join(''):empty('No category data','Your categorized payments will appear here.','pie'))+'</section><div class="callout" style="margin-top:18px">'+ico('shield')+'<span><b>How figures are calculated</b> Reported spending includes only records marked Paid. Approved obligations and pending expenses are excluded. CSV includes permitted details from this workspace only. There is no automatic currency conversion.</span></div>';
+}
+function teamPage(){let a=records('members');return heading('Invite trusted collaborators and give each person only the access they need.')+'<section class="panel"><div class="panel-head"><h3>Workspace members</h3>'+(can('owner')?'<button class="btn primary small" data-modal="invite">'+ico('plus')+' Invite person</button>':'')+'</div>'+(a.length?a.map(x=>'<div class="item"><span class="avatar">'+esc(x.name[0]||'?')+'</span><div class="itemmain"><b>'+esc(x.name)+'</b><small>'+esc(x.email||'Private')+'</small></div>'+(can('owner')&&x.role!=='owner'?'<select class="field member-role" style="width:135px" data-user="'+x.id+'">'+['controller','editor','viewer'].map(r=>'<option value="'+r+'" '+(x.role===r?'selected':'')+'>'+r+'</option>').join('')+'</select>':pill(x.role))+'</div>').join(''):empty('Only you so far','Invite controllers, editors and viewers to collaborate securely.','users'))+'</section><div class="two" style="margin-top:18px"><section class="panel"><h3>Permission guide</h3><div style="display:grid;gap:10px;margin-top:15px">'+[['Owner','Full group management, people and financial controls'],['Controller','Review and approve expenses, manage recurring support'],['Editor','Submit expenses, requests and commitments'],['Viewer','Read reports, with sensitive beneficiary details masked']].map(x=>'<div class="perm"><b>'+x[0]+'</b><small>'+x[1]+'</small></div>').join('')+'</div></section><section class="panel"><h3>Group privacy</h3><div class="callout" style="margin-top:15px">'+ico('lock')+'<span><b>Members only</b> Even a team workspace is accessible only to people explicitly invited to it. Other groups remain separate.</span></div><p class="note" style="margin-top:18px">Invitations are delivered as private links you copy and share. Email sending is not configured in this version. Each link is bound to one email and expires after 7 days.</p></section></div>';}
+function auditPage(){let a=records('audit');return heading('A chronological, append-only record of meaningful decisions.')+'<section class="panel"><div class="panel-head"><h3>Recent activity</h3><span class="badge">'+a.length+' events</span></div>'+(a.length?a.map(x=>'<div class="auditline"><b>'+esc(x.action.replaceAll('.',' · ').replaceAll('_',' '))+'</b><p>'+esc(x.actor||'Workspace member')+' · '+esc(x.entity_type)+'</p><small>'+niceDate(x.created_at)+'</small></div>').join(''):empty('No activity recorded','Every recorded decision will appear here.','shield'))+'</section>';}
+function settingsPage(){let g=group();return heading('Manage this workspace’s identity and visibility.')+'<div class="two"><section class="panel"><div class="panel-head"><h3>Workspace details</h3></div><div class="fieldgroup"><label class="label">Name</label><input class="field" id="settingName" value="'+esc(g.name)+'" '+(!can('owner')?'disabled':'')+'></div><div class="fieldgroup"><label class="label">Description</label><textarea class="field" id="settingDesc" '+(!can('owner')?'disabled':'')+'>'+esc(g.description)+'</textarea></div><div class="fieldgroup"><label class="label">Visibility</label><select class="field" id="settingVisibility" '+(!can('owner')?'disabled':'')+'><option value="private" '+(g.visibility==='private'?'selected':'')+'>Private · invited members only</option><option value="team" '+(g.visibility==='team'?'selected':'')+'>Team · invited members only</option></select></div>'+(can('owner')?'<button class="btn primary" data-action="saveSettings">Save changes</button>':'')+'</section><section class="panel"><div class="panel-head"><h3>Accounting policy</h3></div><div class="perm"><b>Currency · '+esc(g.currency)+'</b><small>Fixed per workspace to avoid mixing amounts with different units.</small></div><div class="perm" style="margin-top:12px"><b>Review before payment</b><small>Editors submit, controllers approve, and only confirmed payments count in reports.</small></div><div class="perm" style="margin-top:12px"><b>Financial records are retained</b><small>No silent deletion of submitted expenses. For corrections, record a documented adjustment in a new entry.</small></div></section></div>';}
+function render(){if(!S.data){authRender();return;}root.innerHTML='<div class="app">'+side()+'<main class="main">'+mobile()+(S.page==='overview'?overview():S.page==='treasury'?treasuryPage():S.page==='expenses'?expensesPage():S.page==='requests'?requestsPage():S.page==='commitments'?commitmentsPage():S.page==='reports'?reportPage():S.page==='team'?teamPage():S.page==='audit'?auditPage():settingsPage())+'</main></div>';}
+function formInput(id,label,type='text',value='',opts=''){return '<div class="fieldgroup"><label class="label" for="'+id+'">'+label+'</label><input id="'+id+'" name="'+id+'" type="'+type+'" class="field" value="'+esc(value)+'" '+opts+'></div>';}
+function select(name,label,opts,chosen){return '<div class="fieldgroup"><label class="label" for="'+name+'">'+label+'</label><select class="field" name="'+name+'" id="'+name+'">'+opts.map(x=>'<option value="'+esc(x)+'" '+(x===chosen?'selected':'')+'>'+esc(x[0].toUpperCase()+x.slice(1))+'</option>').join('')+'</select></div>';}
+function textarea(name,label,value=''){return '<div class="fieldgroup full"><label class="label">'+label+'</label><textarea class="field" name="'+name+'">'+esc(value)+'</textarea></div>';}
+function showModal(title,body,submitLabel='Save',kind='form'){S.modal=kind;modalRoot.innerHTML='<div class="modalbg" id="modalbg"><div class="modal" role="dialog" aria-modal="true" aria-label="'+esc(title)+'"><div class="modal-head"><h2>'+esc(title)+'</h2><button class="round" data-action="close" aria-label="Close">'+ico('x')+'</button></div><form id="modalForm">'+body+'<div class="modal-foot"><button type="button" class="btn" data-action="close">Cancel</button><button type="submit" class="btn primary">'+ico('check')+' '+esc(submitLabel)+'</button></div></form></div></div>';modalRoot.querySelector('input,select,button')?.focus();}
+function closeModal(){S.modal=null;modalRoot.innerHTML='';}
+function quick(){return '<div class="requestgrid" style="grid-template-columns:1fr 1fr">'+(can('controller')?'<button type="button" class="btn soft" data-modal="treasuryDeposit">'+ico('wallet')+' Money in</button>':'')+'<button type="button" class="btn soft" data-modal="expense">'+ico('receipt')+' Expense</button><button type="button" class="btn soft" data-modal="request">'+ico('file')+' Request</button><button type="button" class="btn soft" data-modal="commitment">'+ico('repeat')+' Recurring</button><button type="button" class="btn soft" data-modal="group">'+ico('layers')+' New workspace</button></div>';}
+function open(kind,base={}){
+if(kind==='more'||kind==='switchgroup'||kind==='quick'){modalRoot.innerHTML='<div class="modalbg" id="modalbg"><div class="modal" role="dialog" aria-modal="true"><div class="modal-head"><h2>'+(kind==='quick'?'Add new':kind==='more'?'Navigate':'Workspaces')+'</h2><button class="round" data-action="close">'+ico('x')+'</button></div>'+(kind==='quick'?quick():kind==='more'?navs.filter(x=>['requests','commitments','team','audit','settings'].includes(x[0])).map(x=>navbtn(x)).join('')+'<div class="mobile-account"><div class="person"><span class="avatar">'+esc(S.user.name[0]||'?')+'</span><span class="person-name"><b>'+esc(S.user.name)+'</b><small>'+esc(S.user.email)+'</small></span></div><button class="navbtn" data-action="logout">'+ico('logout')+' Sign out</button><button class="navbtn" data-action="startTour">Take a tour</button></div>':S.data.groups.map(g=>'<button class="group-item '+(g.id===S.groupId?'selected':'')+'" data-group="'+g.id+'">'+ico('layers')+' '+esc(g.name)+'</button>').join('')+'<button class="navbtn" data-modal="group">'+ico('plus')+' New workspace</button>')+'</div></div>';S.modal=kind;return;}
+let form='';
+if(kind==='expense'){form='<div class="formgrid"><div class="fieldgroup full">'+formInput('title','What was paid for?','text',base.title||'','required maxlength="120"')+'</div>'+formInput('amount','Amount ('+esc(group().currency)+')','number',base.amount||'','required step="0.01" min="0.01"')+formInput('expense_date','Date','date',base.expense_date||new Date().toISOString().slice(0,10),'required')+select('category','Category',['Office supplies','Equipment','Software & subscriptions','Payroll','Rent','Utilities','Travel','Meals','Maintenance','Marketing','Training','Professional services','Project costs','Reimbursements','Donations','Support','Food','Housing','Health','Education','Transport','Other'],base.category||'Other')+select('method','Payment method',['Cash','Bank transfer','Card','Other'],'Cash')+formInput('beneficiary','Payee / recipient (private)','text',base.beneficiary||'')+formInput('reference','Internal reference','text',base.reference||'')+'<div class="fieldgroup full">'+formInput('receipt_url','Receipt link (optional)','url','')+'</div>'+textarea('notes','Purpose / notes',base.notes||'')+'</div><p class="note">Expenses are submitted for review. They will not appear as paid until approved and confirmed.</p>';}
+else if(kind==='request'){form='<div class="formgrid"><div class="fieldgroup full">'+formInput('title','What is being requested?','text','','required')+'</div>'+formInput('amount','Estimated amount','number','','step="0.01" min="0"')+formInput('due_date','Needed by','date','')+formInput('beneficiary','Payee / recipient','text','')+select('priority','Priority',['low','normal','high','urgent'],'normal')+textarea('notes','Reason / notes')+'</div>';}
+else if(kind==='commitment'){form='<div class="formgrid"><div class="fieldgroup full">'+formInput('title','Description of recurring expense','text','','required')+'</div>'+formInput('amount','Amount','number','','required min="0.01" step="0.01"')+formInput('next_due','Next due date','date',new Date().toISOString().slice(0,10),'required')+select('frequency','How often?',['weekly','monthly','quarterly','once'],'monthly')+formInput('beneficiary','Payee / recipient','text','')+select('category','Category',['Office supplies','Equipment','Software & subscriptions','Payroll','Rent','Utilities','Travel','Meals','Maintenance','Marketing','Training','Professional services','Project costs','Reimbursements','Donations','Support','Food','Housing','Health','Education','Transport','Other'],'Other')+textarea('notes','Notes')+'</div>';}
+else if(kind==='group'){form=formInput('name','Workspace name','text','','required')+textarea('description','Purpose of this group')+select('currency','Currency',['TND','USD','EUR','CAD','GBP'],'TND')+select('visibility','Visibility',['private','team'],'private')+'<p class="note">Every workspace is isolated. Only its invited members can see its records.</p>';}
+
+else if(kind==='treasuryAccount'){
+ form=formInput('name','Account name','text','','required maxlength="90"')+select('type','Account type',['cash','bank','wallet','other'],'cash')+formInput('opening','Opening balance ('+esc(group()?.currency||'TND')+')','number','0','required min="0" step="0.01"')+'<p class="note">Enter the actual starting amount. The opening balance will be recorded in the treasury history.</p>';
+}
+else if(kind==='treasuryDeposit'||kind==='treasuryWithdrawal'){
+ if(!treasuryAccounts().length){open('treasuryAccount');return;}
+ form=accountSelect('account_id','Treasury account')+formInput('title','Description','text','','required')+
+ '<div class="formgrid">'+formInput('amount','Amount ('+esc(group()?.currency||'TND')+')','number','','required min="0.01" step="0.01"')+
+ formInput('entry_date','Transaction date','date',new Date().toISOString().slice(0,10),'required')+'</div>'+
+ formInput('counterparty','Counterparty (private)','text','')+textarea('notes','Optional notes')+
+ (kind==='treasuryWithdrawal'?'<div class="treasury-linked-note">This is a cash withdrawal, not a spending expense. For a purchase or bill, submit an expense and use Confirm paid to deduct it from treasury.</div>':'');
+}
+else if(kind==='treasuryTransfer'){
+ if(treasuryAccounts().length<2){open('treasuryAccount');return;}
+ form=accountSelect('from_account_id','Source account')+accountSelect('to_account_id','Destination account')+
+ '<div class="formgrid">'+formInput('amount','Amount ('+esc(group()?.currency||'TND')+')','number','','required min="0.01" step="0.01"')+
+ formInput('entry_date','Transaction date','date',new Date().toISOString().slice(0,10),'required')+'</div>'+textarea('notes','Optional notes')+
+ '<p class="note">Transfers move money between accounts and do not change the total available balance.</p>';
+}
+else if(kind==='treasuryPay'){
+ const e=records('expenses').find(x=>x.id===base.id);
+ if(!e||e.status!=='approved')return;
+ if(!treasuryAccounts().length){flash(t('Create a treasury account first.'),true);return;}
+ form='<div class="treasury-funds-preview"><span><small>Confirmed payment</small><br><b>'+esc(e.title)+'</b></span><b>'+mon(e.amount_cents)+'</b></div>'+
+ '<input type="hidden" name="id" value="'+esc(e.id)+'">'+accountSelect('account_id','Pay from treasury')+
+ '<p class="note">The selected account will be debited once. Insufficient funds will block this payment.</p>';
+}
+
+else if(kind==='invite'){form=formInput('email','Invitee email','email','','required')+select('role','Role',['controller','editor','viewer'],'editor')+'<p class="note">We’ll create a single-use link for this email, valid for 7 days. Copy and share it privately.</p>';}
+else return;
+showModal(({expense:'New expense',request:'New request',commitment:'Recurring expense',group:'Create workspace',invite:'Invite a collaborator',treasuryAccount:'Treasury account',treasuryDeposit:'Record money in',treasuryWithdrawal:'Record money out',treasuryTransfer:'Transfer money',treasuryPay:'Confirm paid'})[kind],form,kind==='invite'?'Create invitation':kind==='treasuryAccount'?'Create account':kind==='treasuryTransfer'?'Confirm transfer':kind==='treasuryPay'?'Confirm paid':'Save record',kind);}
+function detail(kind,id){let x=records(kind==='expense'?'expenses':'requests').find(x=>x.id===id);if(!x)return;let info=kind==='expense'?[['Title',x.title],['Amount',mon(x.amount_cents)],['Status',x.status],['Date',niceDate(x.expense_date)],['Category',x.category],['Payee / recipient',x.beneficiary],['Payment method',x.method],['Submitted by',x.creator],['Reference',x.reference],['Notes',x.notes]]:[['Title',x.title],['Status',x.status]];
+let related=records('audit').filter(a=>a.entity_id===id),rows=info.filter(y=>y[1]).map(y=>'<div class="split" style="padding:10px 0;border-bottom:1px solid #edf0eb"><span class="note">'+esc(y[0])+'</span><b style="font-size:12px;text-align:right;max-width:60%">'+esc(y[1])+'</b></div>').join('');
+let actions='';if(kind==='expense'&&can('controller')){if(x.status==='pending'&&(x.created_by!==S.user.id||can('owner')))actions='<button class="btn soft" data-action="approve" data-id="'+id+'">'+ico('check')+' Approve</button><button class="btn danger" data-action="reject" data-id="'+id+'">Reject</button>';else if(x.status==='approved')actions='<button class="btn primary" data-action="paid" data-id="'+id+'">'+ico('check')+' Confirm paid</button>';}
+modalRoot.innerHTML='<div class="modalbg" id="modalbg"><div class="modal" role="dialog" aria-modal="true"><div class="modal-head"><h2>Expense details</h2><button class="round" data-action="close">'+ico('x')+'</button></div>'+rows+(x.receipt_url?'<div style="margin-top:15px"><a class="btn small" rel="noopener noreferrer" target="_blank" href="'+esc(x.receipt_url)+'">Open receipt link '+ico('arrow')+'</a></div>':'')+'<h3 style="font-size:14px;margin-top:24px">Decision trail</h3>'+(related.length?related.map(a=>'<div class="auditline"><b>'+esc(a.action)+'</b><p>'+esc(a.actor||'Member')+'</p><small>'+niceDate(a.created_at)+'</small></div>').join(''):empty('No decision events','No updates on this record.','shield'))+'<div class="modal-foot"><button class="btn" data-action="close">Close</button>'+actions+'</div></div></div>';S.modal='detail';}
+async function doPost(endpoint,data,success){try{await api(endpoint,data);closeModal();await refresh();flash(success||'Saved successfully');}catch(e){flash(e.message,true);}}
+function csv(){let columns=['expense_date','title','category','beneficiary','amount','currency','status','method','reference','notes','receipt_url','creator','approved_at'];let items=records('expenses');let row=x=>{let t=String(x??'');if(/^[=+\-@]/.test(t))t="'"+t;return '"'+t.replaceAll('"','""')+'"';};let content=[columns.join(','),...items.map(e=>columns.map(c=>row(c==='amount'?(e.amount_cents/100).toFixed(2):e[c])).join(','))].join('\r\n');let blob=new Blob(['\uFEFF'+content],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(group()?.name||'ledger').toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-expenses.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
+function authRender(){let signup=S.auth==='signup',first=S.setup,inv=S.inviteInfo;root.innerHTML='<div class="auth"><div class="authvisual"><div class="branding"><span class="brand-icon"><img class=\"gsc-mark\" src=\"/app-icon-192.png\" alt=\"\"></span> GSC Ledger</div><h1>Every expense.<br><em>In its place.</em></h1><p>Manage spending, requests, recurring bills and reports across all your workspaces — from offices and projects to shared budgets.</p><footer>Your workspaces. Your team. Your overview.</footer></div><div class="authright"><div class="authcard"><div class="auth-tag">'+ico('shield')+' ORGANIZED FINANCES, TOGETHER</div><h2>'+(signup?'Create your account':'Welcome back')+'</h2><p>'+(signup?(first?'Set up the first administrator account for your workspace.':'You have been invited to collaborate with '+esc(inv?.group_name||'a group')+'.'):'Sign in to manage expenses, requests and reports across your workspaces.')+'</p><form id="authForm">'+(signup?formInput('name','Full name','text','','required autocomplete="name"'):'')+formInput('email','Email address','email',inv?.email||'','required autocomplete="email"')+formInput('password','Password','password','','required minlength="12" autocomplete="'+(signup?'new-password':'current-password')+'"')+(signup&&first?formInput('setupKey','Private setup key','password','','required'): '')+'<button class="btn primary" type="submit">'+(signup?'Create my account':'Sign in')+' '+ico('arrow')+'</button></form><div class="swap">'+((S.setup||S.inviteInfo)?((signup?'Already registered? ':'Have an invitation? ')+'<button id="authSwitch">'+(signup?'Sign in':'Create account')+'</button>'):'New here? Ask a workspace owner for a private invitation.')+'</div>'+(S.invite&&!signup?'<div class="callout" style="margin-top:20px"><span>Invitation detected. Sign in with the invited email to accept access.</span></div>':'')+'</div></div></div>';}
+async function init(){try{let a=await api('bootstrap');S.setup=a.needsSetup;if(S.invite){try{S.inviteInfo=await api('invite/lookup?token='+encodeURIComponent(S.invite));}catch(e){S.inviteInfo=null;}}try{await refresh(true);if(S.invite){try{await api('invite/accept',{token:S.invite});history.replaceState(null,'','/');await refresh();flash('Invitation accepted');}catch(e){flash(e.message,true);}}}catch(e){S.auth=(S.setup||S.inviteInfo)?'signup':'login';authRender();}}catch(e){root.innerHTML='<div class="authright"><div class="authcard"><h2>Connection unavailable</h2><p>'+esc(e.message)+'</p><button class="btn" onclick="location.reload()">Retry</button></div></div>';}}
+root.addEventListener('submit',async e=>{if(e.target.id!=='authForm')return;e.preventDefault();let v=Object.fromEntries(new FormData(e.target));try{let inviteToAccept=S.invite;await api(S.auth==='signup'?'auth/signup':'auth/login',{...v,inviteToken:S.invite});if(inviteToAccept&&S.auth==='login')await api('invite/accept',{token:inviteToAccept});history.replaceState(null,'','/');S.invite='';await refresh(true);flash('Welcome to Omni Ledger');}catch(err){flash(err.message,true);}});
+root.addEventListener('click',async e=>{let el=e.target.closest('button,[data-detail]');if(!el)return;if(el.id==='authSwitch'){S.auth=S.auth==='signup'?'login':'signup';authRender();return;}
+if(el.dataset.group){S.groupId=el.dataset.group;try{localStorage.setItem('mercy-ledger-group-'+S.user.id,S.groupId);}catch(error){}S.page='overview';closeModal();render();return;}
+if(el.dataset.page){S.page=el.dataset.page;S.search='';S.status='all';closeModal();render();scrollTo(0,0);return;}
+if(el.dataset.expenseFilter){S.status=el.dataset.expenseFilter;root.querySelectorAll('.tx-chip').forEach(chip=>{let active=chip.dataset.expenseFilter===S.status;chip.classList.toggle('active',active);chip.setAttribute('aria-pressed',active?'true':'false');});let target=document.getElementById('txResults');if(target){target.innerHTML=expenseResultsMarkup(records('expenses'));localizeElement(target);}return;}if(el.dataset.modal){open(el.dataset.modal);return;}
+if(el.dataset.detail){let x=el.dataset.detail.split(':');detail(x[0],x[1]);return;}
+if(el.dataset.recordRequest){let r=records('requests').find(x=>x.id===el.dataset.recordRequest);if(r)open('expense',{title:r.title,amount:(r.amount_cents/100).toFixed(2),beneficiary:r.beneficiary,reference:'request:'+r.id,category:'Other',notes:r.notes});return;}
+if(el.dataset.recordCommit){let c=records('commitments').find(x=>x.id===el.dataset.recordCommit);if(c)open('expense',{title:c.title,amount:(c.amount_cents/100).toFixed(2),beneficiary:c.beneficiary,reference:'commitment:'+c.id+':'+c.next_due,expense_date:c.next_due,category:c.category,notes:c.notes});return;}
+let action=el.dataset.action,id=el.dataset.id;if(!action)return;
+if(action==='startTour'){closeModal();tourStart();return;}
+if(action==='logout'){try{await api('auth/logout',{});S.data=null;S.auth='login';authRender();}catch(err){flash(err.message,true);}return;}
+if(action==='txClear'){S.search='';S.status='all';let field=document.getElementById('expenseSearch');if(field)field.value='';root.querySelectorAll('.tx-chip').forEach(chip=>{let active=chip.dataset.expenseFilter==='all';chip.classList.toggle('active',active);chip.setAttribute('aria-pressed',active?'true':'false');});let target=document.getElementById('txResults');if(target){target.innerHTML=expenseResultsMarkup(records('expenses'));localizeElement(target);}return;}if(action==='csv'){csv();flash('CSV downloaded');return;}if(action==='pdf'){downloadReport();return;}
+if(action==='saveSettings'){await doPost('group/update',{group_id:S.groupId,name:document.getElementById('settingName').value,description:document.getElementById('settingDesc').value,visibility:document.getElementById('settingVisibility').value},'Settings saved');return;}
+if(action==='stopCommit'){if(confirm(t('Stop this recurring commitment?')))await doPost('commitment/stop',{id},'Commitment stopped');return;}
+if(action==='requestApprove'||action==='requestReject')await doPost('request/status',{id,status:action==='requestApprove'?'approved':'rejected'},'Request updated');
+if(action==='paid'&&treasuryAccounts().length){open('treasuryPay',{id});return;}if(action==='approve'||action==='reject'||action==='paid')await doPost('expense/status',{id,status:action==='approve'?'approved':action==='reject'?'rejected':'paid'},'Expense updated');
+});
+root.addEventListener('input',e=>{if(e.target.id==='expenseSearch'){S.search=e.target.value;let target=document.getElementById('txResults');if(target){target.innerHTML=expenseResultsMarkup(records('expenses'));localizeElement(target);}}});
+root.addEventListener('change',async e=>{if(e.target.id==='statusFilter'){S.status=e.target.value;render();}if(e.target.matches('.member-role')){let role=e.target.value,user_id=e.target.dataset.user;if(confirm(t('Set this member’s role to')+' '+t(role)+' ?'))await doPost('membership/update',{group_id:S.groupId,user_id,role},'Role updated');else render();}});
+modalRoot.addEventListener('click',e=>{let el=e.target.closest('button');if(e.target.id==='modalbg'||el?.dataset.action==='close'){closeModal();return;}if(!el)return;if(el.dataset.modal){open(el.dataset.modal);return;}if(el.dataset.group){S.groupId=el.dataset.group;try{localStorage.setItem('mercy-ledger-group-'+S.user.id,S.groupId);}catch(error){}S.page='overview';closeModal();render();return;}if(el.dataset.page){S.page=el.dataset.page;closeModal();render();return;}let act=el.dataset.action;if(act==='startTour'){closeModal();tourStart();return;}if(act==='logout'){api('auth/logout',{}).then(()=>{closeModal();S.data=null;S.auth='login';authRender();}).catch(err=>flash(err.message,true));return;}if(act==='paid'&&treasuryAccounts().length){open('treasuryPay',{id:el.dataset.id});return;}if(['approve','reject','paid'].includes(act))doPost('expense/status',{id:el.dataset.id,status:act==='approve'?'approved':act==='reject'?'rejected':'paid'},'Expense updated');});
+modalRoot.addEventListener('submit',async e=>{if(e.target.id!=='modalForm')return;e.preventDefault();let data=Object.fromEntries(new FormData(e.target));if(S.modal!=='group')data.group_id=S.groupId;let name=S.modal;try{if(name==='treasuryPay')data.status='paid';if(name==='treasuryDeposit')data.kind='deposit';if(name==='treasuryWithdrawal')data.kind='withdrawal';if(['treasuryDeposit','treasuryWithdrawal','treasuryTransfer'].includes(name))data.operation_id=crypto.randomUUID();let r=await api(({expense:'expense/create',request:'request/create',commitment:'commitment/create',group:'groups',invite:'invite/create',treasuryAccount:'treasury/account/create',treasuryDeposit:'treasury/entry/create',treasuryWithdrawal:'treasury/entry/create',treasuryTransfer:'treasury/transfer',treasuryPay:'expense/status'})[name],data);closeModal();await refresh();if(name==='group'){S.groupId=r.id;try{localStorage.setItem('mercy-ledger-group-'+S.user.id,S.groupId);}catch(error){}}if(name==='invite'){let link=location.origin+'/?invite='+encodeURIComponent(r.token);try{await navigator.clipboard.writeText(link);flash('Invitation link copied to clipboard');}catch(e){prompt(t('Copy this private invitation link:'),link);} }else flash('Saved for your team');render();}catch(err){flash(err.message,true);}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* Mercy Ledger localization 1.0 — client-side, no translation service */
+const FR = {
+ "Language":"Langue","Overview":"Vue d’ensemble","Home":"Accueil","Transactions":"Transactions","Requests":"Demandes","Reports":"Rapports","More":"Plus","Workspace":"Espace","WORKSPACE":"ESPACE",
+ "Support requests":"Demandes d’aide","Requests & waitlist":"Demandes et liste d’attente","Recurring support":"Aides récurrentes","Reports & insights":"Rapports et analyses",
+ "People & access":"Personnes et accès","Activity log":"Journal d’activité","Workspace settings":"Paramètres de l’espace",
+ "Team & roles":"Équipe et rôles","Audit trail":"Historique d’audit","Settings":"Paramètres","Workspaces":"Espaces","Manage":"Gérer",
+ "New workspace":"Nouvel espace","New record":"Nouvelle opération","Add record":"Ajouter une opération","Add new record":"Ajouter une opération",
+ "New expense":"Nouvelle dépense","New support request":"Nouvelle demande d’aide","Recurring support":"Aides récurrentes",
+ "Create workspace":"Créer un espace","Invite a collaborator":"Inviter une personne","Invite person":"Inviter",
+ "Team & roles":"Équipe et droits","People & access":"Membres et accès","Workspaces /":"Espaces /",
+ "GOOD STEWARDSHIP":"GESTION RESPONSABLE","Built for integrity":"Conçu pour la confiance",
+ "Every approval and payment is recorded in your group’s activity trail.":"Chaque approbation et chaque paiement sont enregistrés dans l’historique du groupe.",
+ "A clear view of the care you provide":"Une vue claire de votre engagement",
+ "Total paid this month":"Total payé ce mois-ci","Verified payments only":"Paiements confirmés uniquement",
+ "Awaiting approval":"En attente de validation","Approved, not paid":"Approuvées, non payées","submitted":"soumis","recorded":"enregistrés",
+ "Recent transactions":"Opérations récentes","All transactions":"Toutes les opérations",
+ "Where the money went":"Répartition des dépenses","Spending report":"Rapport de dépenses",
+ "Upcoming commitments":"Engagements à venir","View schedule":"Voir le calendrier","Requests & waitlist":"Demandes et liste d’attente",
+ "See requests":"Voir les demandes","Nothing waiting":"Aucune demande en attente","No obligations scheduled":"Aucune échéance planifiée",
+ "Your ledger starts here":"Votre registre commence ici","Submit your first expense to begin an auditable history.":"Enregistrez votre première dépense pour commencer un suivi vérifiable.",
+ "No support requests yet":"Aucune demande d’aide","Add people or needs to the waitlist and follow each decision.":"Ajoutez les besoins à la liste d’attente et suivez chaque décision.",
+ "Ready for your first report":"Votre premier rapport vous attend","The breakdown appears once a payment is confirmed.":"La répartition apparaîtra dès qu’un paiement sera confirmé.",
+ "Transparency is a practice, not a slogan.":"La transparence se démontre au quotidien.",
+ "Only confirmed payments count as spending. Requests, approvals and payments remain distinct in the ledger.":"Seuls les paiements confirmés comptent comme dépenses. Les demandes, les approbations et les versements restent distincts.",
+ "Track the full journey from submission to confirmed payment.":"Suivez chaque dépense, de la saisie au paiement confirmé.",
+ "Track the full journey from submission to confirmed payment.":"Suivez chaque dépense jusqu’au paiement final.",
+ "Search title, category, beneficiary":"Rechercher un titre, une catégorie ou un bénéficiaire","All statuses":"Tous les statuts",
+ "Expense":"Dépense","Beneficiary":"Bénéficiaire","Date":"Date","Amount":"Montant","Status":"Statut","Action":"Action",
+ "Details":"Détails","Category":"Catégorie","Payment method":"Mode de paiement","Submitted by":"Saisi par",
+ "Reference":"Référence","Notes":"Notes","Purpose / notes":"Objet / observations","Receipt link (optional)":"Lien du justificatif (facultatif)",
+ "What was paid for?":"Objet de la dépense","Beneficiary (private)":"Bénéficiaire (confidentiel)","Internal reference":"Référence interne",
+ "Amount (TND)":"Montant (TND)","Amount (CAD)":"Montant (CAD)","Amount (USD)":"Montant (USD)","Amount (EUR)":"Montant (EUR)","Amount (GBP)":"Montant (GBP)",
+ "No matching expenses":"Aucune dépense correspondante","Submit an expense or adjust your filters to see records.":"Ajoutez une dépense ou modifiez vos filtres.",
+ "Collect real needs, review them fairly, and track what was funded.":"Recensez les besoins, évaluez les demandes et suivez les aides versées.",
+ "Add a request":"Ajouter une demande","Describe the need":"Décrivez le besoin","Estimated amount":"Montant estimé","Needed by":"Date souhaitée","Priority":"Priorité","Assessment / notes":"Évaluation / observations",
+ "Recipient not specified":"Bénéficiaire non indiqué","No additional notes":"Aucune note supplémentaire","Decline":"Refuser","Approve":"Approuver","Record expense":"Enregistrer la dépense",
+ "A reliable schedule for ongoing support and obligations.":"Planifiez les aides régulières et les obligations financières.",
+ "No recurring support yet":"Aucune aide récurrente","Track ongoing gifts, bills, housing, food or medical needs here.":"Suivez ici les aides régulières, les factures et les besoins essentiels.",
+ "Add commitment":"Ajouter un engagement","Name of commitment":"Nom de l’engagement","Next due date":"Prochaine échéance","How often?":"Fréquence",
+ "Record payment":"Enregistrer un paiement","Recorded for review":"Soumis à validation","Next due:":"Prochaine échéance :","Stop":"Arrêter",
+ "Recurring commitments do not automatically count as spending. Confirm each actual payment after review to advance the schedule.":"Les engagements récurrents ne sont pas automatiquement des dépenses. Confirmez chaque paiement effectué après validation.",
+ "Evidence-led reporting, built for transparency and stewardship.":"Des rapports traçables, pour une gestion transparente et responsable.",
+ "Export CSV":"Exporter en CSV","Download CSV":"Télécharger le CSV","Print report":"Imprimer le rapport",
+ "Lifetime confirmed spending":"Total des dépenses confirmées","Items awaiting approval":"Opérations à valider","Not included in totals":"Exclues des totaux",
+ "Requests funded":"Demandes financées","Via confirmed expense links":"Liées à des paiements confirmés",
+ "Spending categories":"Catégories de dépenses","Paid records only":"Paiements confirmés uniquement",
+ "Monthly spending":"Dépenses mensuelles","Confirmed transactions":"Opérations payées","No spending trend yet":"Pas encore de tendance",
+ "Charts appear after payments are confirmed.":"Les graphiques apparaîtront après confirmation des paiements.",
+ "Category breakdown":"Répartition par catégorie","No category data":"Aucune donnée par catégorie",
+ "Your categorized payments will appear here.":"Vos paiements classés par catégorie apparaîtront ici.",
+ "How figures are calculated":"Méthode de calcul",
+ "Reported spending includes only records marked Paid. Approved obligations and pending expenses are excluded. CSV includes permitted details from this workspace only. There is no automatic currency conversion.":"Les dépenses comptabilisées comprennent uniquement les opérations payées. Les engagements approuvés et les dépenses en attente sont exclus. Le CSV ne comprend que les données autorisées de cet espace. Aucune conversion automatique de devises.",
+ "Invite trusted collaborators and give each person only the access they need.":"Invitez vos collaborateurs et accordez-leur uniquement les droits nécessaires.",
+ "Workspace members":"Membres de l’espace","Permission guide":"Guide des autorisations",
+ "Owner":"Propriétaire","Controller":"Contrôleur","Editor":"Éditeur","Viewer":"Lecteur",
+ "Full group management, people and financial controls":"Gestion intégrale du groupe, des membres et des contrôles financiers",
+ "Review and approve expenses, manage recurring support":"Valider les dépenses et gérer les engagements récurrents",
+ "Submit expenses, requests and commitments":"Soumettre des dépenses, demandes et engagements",
+ "Read reports, with sensitive beneficiary details masked":"Consulter les rapports sans voir les données sensibles des bénéficiaires",
+ "Group privacy":"Confidentialité du groupe","Members only":"Membres invités uniquement",
+ "Even a team workspace is accessible only to people explicitly invited to it. Other groups remain separate.":"Seules les personnes invitées accèdent à cet espace, même en mode équipe. Les autres groupes restent distincts.",
+ "Invitations are delivered as private links you copy and share. Email sending is not configured in this version. Each link is bound to one email and expires after 7 days.":"Les invitations sont des liens privés à copier et à partager. L’envoi automatique par courriel n’est pas encore configuré. Chaque lien est réservé à une adresse et expire après 7 jours.",
+ "Only you so far":"Vous êtes seul pour le moment","Invite controllers, editors and viewers to collaborate securely.":"Invitez des contrôleurs, des éditeurs ou des lecteurs en toute sécurité.",
+ "Private":"Privé","Private · invited members only":"Privé · uniquement les membres invités",
+ "Team · invited members only":"Équipe · uniquement les membres invités",
+ "A chronological, append-only record of meaningful decisions.":"Un historique chronologique des décisions, sans suppression silencieuse.",
+ "Recent activity":"Activité récente","No activity recorded":"Aucune activité enregistrée","Every recorded decision will appear here.":"Chaque décision enregistrée apparaîtra ici.",
+ "Manage this workspace’s identity and visibility.":"Gérez les informations et la confidentialité de cet espace.",
+ "Workspace details":"Informations de l’espace","Name":"Nom","Description":"Description","Visibility":"Visibilité","Save changes":"Enregistrer",
+ "Accounting policy":"Règles de comptabilité","Review before payment":"Validation avant paiement","Financial records are retained":"Historique financier conservé",
+ "Fixed per workspace to avoid mixing amounts with different units.":"Fixée par espace afin de ne pas mélanger des devises différentes.",
+ "Editors submit, controllers approve, and only confirmed payments count in reports.":"Les éditeurs soumettent, les contrôleurs valident et seuls les paiements confirmés sont comptabilisés.",
+ "No silent deletion of submitted expenses. For corrections, record a documented adjustment in a new entry.":"Les dépenses soumises ne peuvent pas être supprimées sans trace. Toute correction nécessite une nouvelle écriture documentée.",
+ "Add new":"Ajouter","Navigate":"Navigation","Create":"Créer","New workspace":"Nouvel espace",
+ "Save":"Enregistrer","Save record":"Enregistrer","Cancel":"Annuler","Close":"Fermer","Sign out":"Se déconnecter",
+ "What was paid for?":"Objet de la dépense",
+ "Expenses are submitted for review. They will not appear as paid until approved and confirmed.":"Les dépenses sont soumises à validation. Elles ne comptent pas comme payées tant qu’elles ne sont pas approuvées et confirmées.",
+ "Workspace name":"Nom de l’espace","Purpose of this group":"Objectif de cet espace","Currency":"Devise",
+ "Every workspace is isolated. Only its invited members can see its records.":"Chaque espace est indépendant. Seuls les membres invités peuvent consulter ses données.",
+ "Invitee email":"Courriel de la personne invitée","Role":"Rôle",
+ "We’ll create a single-use link for this email, valid for 7 days. Copy and share it privately.":"Un lien d’invitation à usage unique sera créé pour cette adresse, valable 7 jours. Partagez-le en privé.",
+ "Create invitation":"Créer l’invitation",
+ "New support request":"Nouvelle demande d’aide","Add a request":"Ajouter une demande",
+ "Expense details":"Détails de la dépense","Decision trail":"Historique des décisions","Confirm paid":"Confirmer le paiement",
+ "Open receipt link":"Ouvrir le justificatif","No decision events":"Aucune décision enregistrée","No updates on this record.":"Aucune modification pour cette opération.",
+ "Cash":"Espèces","Bank transfer":"Virement bancaire","Card":"Carte","Other":"Autre",
+ "Support":"Aide","Food":"Alimentation","Housing":"Logement","Health":"Santé","Education":"Éducation","Transport":"Transport","Utilities":"Factures","Giving":"Dons",
+ "weekly":"hebdomadaire","monthly":"mensuel","quarterly":"trimestriel","once":"ponctuel",
+ "pending":"en attente","approved":"approuvé","paid":"payé","rejected":"refusé","draft":"brouillon",
+ "waiting":"en attente","funded":"financé","active":"actif","inactive":"inactif",
+ "low":"faible","normal":"normale","high":"élevée","urgent":"urgente","owner":"propriétaire","controller":"contrôleur","editor":"éditeur","viewer":"lecteur",
+ "No status":"Aucun statut",
+ "ACCOUNTABILITY, TOGETHER":"UNE GESTION TRANSPARENTE",
+ "Your giving.":"Votre générosité.","Every detail.":"En toute clarté.",
+ "Make generosity measurable. Track every need, review every expense, and share clear reports with the right people.":"Donnez de la visibilité à votre générosité. Suivez chaque besoin, vérifiez chaque dépense et partagez des rapports clairs avec les bonnes personnes.",
+ "Private by design. Transparent by principle.":"Confidentiel par conception. Transparent par principe.",
+ "Create your account":"Créer votre compte","Welcome back":"Bon retour",
+ "Create the first owner account for your ministry.":"Créez le premier compte administrateur de votre ministère.",
+ "Sign in to keep your shared finances clear and accountable.":"Connectez-vous pour gérer vos finances partagées de manière claire et responsable.",
+ "Full name":"Nom complet","Email address":"Adresse courriel","Password":"Mot de passe","Private setup key":"Clé privée d’initialisation",
+ "Create my account":"Créer mon compte","Sign in":"Connexion","Already registered?":"Déjà inscrit ?","Have an invitation?":"Vous avez une invitation ?",
+ "New here? Ask a workspace owner for a private invitation.":"Nouveau ? Demandez une invitation privée au propriétaire d’un espace.",
+ "Invitation detected. Sign in with the invited email to accept access.":"Invitation détectée. Connectez-vous avec l’adresse invitée pour accepter l’accès.",
+ "Connection unavailable":"Connexion indisponible","Retry":"Réessayer",
+ "Sign in required":"Connexion requise","Invalid credentials":"Identifiants invalides",
+ "Use a valid email, name and password of at least 12 characters":"Saisissez une adresse courriel valide, un nom et un mot de passe de 12 caractères minimum.",
+ "Email already registered":"Cette adresse est déjà utilisée","Invitation required for this address":"Une invitation est nécessaire pour cette adresse",
+ "Setup key invalid":"Clé d’initialisation incorrecte","Unable to complete request":"Impossible de terminer l’opération",
+ "Too many attempts. Try later.":"Trop de tentatives. Réessayez plus tard.",
+ "Editor required":"Droits d’éditeur requis","Controller required":"Droits de contrôleur requis","Owner required":"Droits de propriétaire requis",
+ "Amount and date required":"Montant et date requis","Valid title, amount and date required":"Un titre, un montant et une date valides sont requis",
+ "Invalid request":"Demande invalide","Invalid recurring obligation":"Engagement récurrent invalide",
+ "Invalid approval transition":"Changement de statut impossible","Cannot approve your own expense":"Vous ne pouvez pas valider votre propre dépense",
+ "Request updated":"Demande mise à jour","Expense updated":"Dépense mise à jour","Settings saved":"Paramètres enregistrés",
+ "Role updated":"Rôle mis à jour","Saved for your team":"Enregistré pour votre équipe",
+ "Welcome to Mercy Ledger":"Bienvenue sur Mercy Ledger","Invitation accepted":"Invitation acceptée","Invitation link copied to clipboard":"Lien d’invitation copié",
+ "CSV downloaded":"CSV téléchargé","Commitment stopped":"Engagement arrêté","Add a request":"Ajouter une demande",
+ "Confirm this payment":"Confirmer ce paiement","Switch workspace":"Changer d’espace","Switch language":"Changer de langue",
+ "Stop this recurring commitment?":"Arrêter cet engagement récurrent ?",
+ "Set this member’s role to":"Définir le rôle de ce membre sur",
+ "Copy this private invitation link:":"Copiez ce lien d’invitation privé :",
+ "Workspace member":"Membre de l’espace",
+ "No matching expenses":"Aucune dépense correspondante",
+ "no":"non"
+};
+/* Omni workspace translation overrides */
+Object.assign(FR,{"FINANCES, ORGANIZED":"FINANCES BIEN ORGANISÉES","All your expenses, in one place":"Toutes vos dépenses au même endroit","Manage records, approvals and reports across separate workspaces.":"Gérez les opérations, les validations et les rapports dans des espaces distincts.","ORGANIZED FINANCES, TOGETHER":"DES FINANCES ORGANISÉES, EN ÉQUIPE","Every expense.":"Chaque dépense.","In its place.":"À sa place.","Manage spending, requests, recurring bills and reports across all your workspaces — from offices and projects to shared budgets.":"Gérez les dépenses, les demandes, les factures récurrentes et les rapports dans tous vos espaces : bureaux, projets ou budgets partagés.","Your workspaces. Your team. Your overview.":"Vos espaces. Votre équipe. Une vue d’ensemble.","Set up the first administrator account for your workspace.":"Créez le premier compte administrateur de votre espace.","Sign in to manage expenses, requests and reports across your workspaces.":"Connectez-vous pour gérer vos dépenses, vos demandes et vos rapports dans vos différents espaces.","Welcome to Omni Ledger":"Bienvenue sur Omni Ledger","Your workspace at a glance":"Votre espace en un coup d’œil","A clear picture of your spending.":"Une vue claire de vos dépenses.","Clear records, better decisions.":"Des données claires pour de meilleures décisions.","Paid transactions count towards spending. Requests and approvals remain separate until payment.":"Seules les opérations payées sont comptabilisées comme dépenses. Les demandes et les validations sont suivies séparément jusqu’au paiement.","Requests & queue":"Demandes et suivi","Requests":"Demandes","Requests settled":"Demandes réglées","Linked to paid expenses":"Associées à des dépenses payées","No requests yet":"Aucune demande pour le moment","Not assigned":"Non attribué","All caught up":"Tout est à jour","Add planned purchases or requests, approve them and link them to expenses.":"Ajoutez des achats prévus ou des demandes, validez-les, puis associez-les aux dépenses.","Track planned purchases, reimbursements, supplies and other requests.":"Suivez les achats prévus, les remboursements, les fournitures et les autres demandes.","Capture upcoming purchases, reimbursements and requests, then track each decision.":"Centralisez les achats prévus, les remboursements et les demandes, puis suivez chaque décision.","Keep bills, subscriptions and other recurring payments on schedule.":"Planifiez les factures, les abonnements et les autres paiements réguliers.","No recurring expenses yet":"Aucune dépense récurrente","Recurring expenses":"Dépenses récurrentes","Recurring expense":"Dépense récurrente","Schedule rent, subscriptions, payroll and any repeating expense.":"Planifiez les loyers, les abonnements, les salaires et toutes les dépenses répétitives.","Explore spending patterns, trends and approvals for this workspace.":"Analysez les dépenses, les tendances et les validations de cet espace.","Payee / recipient":"Bénéficiaire du paiement / destinataire","Payee / recipient (private)":"Bénéficiaire du paiement / destinataire (privé)","What is being requested?":"Objet de la demande","New request":"Nouvelle demande","Description of recurring expense":"Description de la dépense récurrente","Reason / notes":"Motif / notes","Add recurring expense":"Ajouter une dépense récurrente","New entry":"Nouvelle opération","Request":"Demande","Office supplies":"Fournitures de bureau","Equipment":"Équipement","Software & subscriptions":"Logiciels et abonnements","Payroll":"Salaires et paie","Rent":"Loyer","Utilities":"Charges et services","Travel":"Déplacements professionnels","Meals":"Repas","Maintenance":"Entretien et maintenance","Marketing":"Marketing","Training":"Formation","Professional services":"Services professionnels","Project costs":"Coûts de projet","Reimbursements":"Remboursements","Donations":"Dons","Support":"Aide","Food":"Alimentation","Housing":"Logement","Health":"Santé","Education":"Éducation","Transport":"Transport","Other":"Autre","Team & access":"Équipe et accès","Please sign in":"Veuillez vous connecter","No upcoming payments":"Aucun paiement à venir","Add bills or scheduled expenses to stay ahead.":"Ajoutez des factures ou des dépenses planifiées pour mieux anticiper.","Due":"Échéance","Due ":"Échéance : ","Requested by":"Demandeur","Category":"Catégorie","Expense":"Dépense","Requests completed":"Demandes traitées","Submit an expense or adjust your filters to see records.":"Ajoutez une dépense ou modifiez les filtres pour afficher des opérations.","Where the money went":"Répartition des dépenses"});
+/* Omni final generic copy */
+Object.assign(FR,{"Payee":"Bénéficiaire du paiement","Search title, category or payee":"Rechercher un titre, une catégorie ou un bénéficiaire","All your spending.":"Toutes vos dépenses.","Clearly organized.":"Bien organisées.","Expenses, requests and reports across teams, offices and personal workspaces.":"Gérez dépenses, demandes et rapports dans vos espaces professionnels et personnels.","Separate workspaces · Clear records":"Espaces distincts · Suivi clair","✦ Expenses and requests, organized":"✦ Dépenses et demandes organisées","Opening your workspace…":"Ouverture de votre espace…"});
+Object.assign(FR,{"Export financial report":"Rapport PDF professionnel","A4 PDF · Summary, categories and transactions":"Document A4 : synthèse, analyse et registre des opérations","From":"Du","To":"Au","Include":"Inclure","All transactions":"Toutes les opérations","Paid only":"Payées uniquement","Pending only":"En attente uniquement","Approved only":"Approuvées uniquement","Rejected only":"Refusées uniquement","Download PDF":"Télécharger le PDF","Include recipient names (restricted report)":"Inclure les bénéficiaires (rapport confidentiel)","Includes a financial summary, category breakdown and detailed transaction register. Recipient details are private by default.":"Généré à partir des opérations, et non d'une capture d'écran. Comprend la pagination et le registre détaillé.","PDF report downloaded":"Rapport PDF téléchargé","Choose a valid date range.":"Choisissez une période valide."});
+Object.assign(FR,{"Treasury":"Trésorerie","Track money available across cash, bank and other treasury accounts.":"Suivez les fonds disponibles en caisse, en banque et sur les autres comptes.","Available funds":"Fonds disponibles","accounts":"comptes","Money in":"Entrée d’argent","Money out":"Sortie d’argent","Transfer":"Virement","Account":"Compte","Current recorded balance across this workspace":"Solde enregistré dans cet espace","Money received / opening":"Fonds reçus / solde initial","Paid expenses":"Dépenses payées","Other withdrawals":"Autres sorties","Treasury accounts":"Comptes de trésorerie","Add account":"Ajouter un compte","Active":"Actif","Inactive":"Inactif","Treasury activity":"Mouvements de trésorerie","Latest recorded movements":"Derniers mouvements enregistrés","No treasury accounts yet":"Aucun compte de trésorerie","Add a cash box or bank account with its opening balance to start tracking funds.":"Ajoutez une caisse ou un compte bancaire avec son solde initial.","No treasury movements":"Aucun mouvement de trésorerie","Add funds, record a withdrawal, or transfer between accounts.":"Enregistrez une entrée, une sortie ou un virement.","How available funds work":"Calcul des fonds disponibles","Opening balances + deposits − withdrawals − paid expenses. Transfers move money between accounts without changing the total. Historical paid expenses are not automatically deducted; only payments linked after treasury setup affect these balances. Treasury withdrawals are not counted as expenses in spending reports.":"Soldes initiaux + entrées − sorties − dépenses payées. Les virements internes ne modifient pas le solde global. Les anciennes dépenses payées ne sont pas déduites automatiquement. Les sorties de trésorerie non liées ne comptent pas comme dépenses dans les rapports.","Read-only treasury overview":"Consultation de la trésorerie","Select account":"Choisir un compte","Opening balance":"Solde initial","Account name":"Nom du compte","Account type":"Type de compte","Treasury account":"Compte de trésorerie","Record money in":"Enregistrer une entrée","Record money out":"Enregistrer une sortie","Transfer money":"Transférer des fonds","Source account":"Compte source","Destination account":"Compte destinataire","Transaction date":"Date de l’opération","Counterparty (private)":"Tiers (privé)","Description":"Libellé","Optional notes":"Notes facultatives","Create account":"Créer un compte","Record entry":"Enregistrer","Confirm transfer":"Confirmer le virement","Select an account for the confirmed payment.":"Sélectionnez le compte à débiter pour confirmer le paiement.","Pay from treasury":"Payer depuis la trésorerie","Confirm paid":"Confirmer payé","Create a treasury account first.":"Créez d’abord un compte de trésorerie.","Treasury balance":"Solde de trésorerie","Set up treasury":"Configurer la trésorerie","Not tracked yet":"Non suivi pour le moment","deposit":"entrée","withdrawal":"sortie","opening":"solde initial","expense":"dépense","transfer_in":"virement entrant","transfer_out":"virement sortant","cash":"caisse","bank":"banque","wallet":"portefeuille","other":"autre","Treasury account added":"Compte de trésorerie ajouté","Treasury entry recorded":"Mouvement enregistré","Transfer completed":"Virement effectué"});
+Object.assign(FR,{"View treasury":"Voir la trésorerie","available funds":"fonds disponibles","Set up accounts to see money available":"Configurez des comptes pour voir les fonds disponibles","Treasury balance":"Solde de trésorerie","Not tracked yet":"Non suivi","Set up treasury":"Configurer la trésorerie","Treasury":"Trésorerie"});
+Object.assign(FR,{"All your expenses, organized in one place.":"Toutes vos dépenses au même endroit.","Search transactions":"Rechercher une opération","Filter by status":"Filtrer par statut","All":"Tout","Pending":"En attente","Approved":"Approuvées","Paid":"Payées","Rejected":"Refusées","transaction":"opération","transactions":"opérations","No transactions yet":"Aucune opération pour le moment","Record your first expense and follow it from review to payment.":"Ajoutez votre première dépense et suivez-la jusqu’au paiement.","Add expense":"Ajouter une dépense","No matching transactions":"Aucune opération correspondante","Try another search or status.":"Essayez une autre recherche ou un autre statut.","Clear filters":"Effacer les filtres"});
+Object.assign(FR,{"Take a tour":"Visite guidée"});
+Object.assign(FR,{"Export financial report":"Exporter un rapport financier","A4 PDF · Summary, categories and transactions":"PDF A4 · Synthèse, catégories et opérations","Includes a financial summary, category breakdown and detailed transaction register. Recipient details are private by default.":"Contient une synthèse financière, la répartition par catégorie et le registre détaillé. Les informations sur les bénéficiaires restent confidentielles par défaut.","Expenses":"Dépenses"});
+function t(s){return S.lang==='fr'?(FR[String(s)]||String(s)):String(s);}
+function localizedText(value){
+ const original=String(value),trimmed=original.trim();
+ if(!trimmed)return original;
+ let translated=t(trimmed);
+ if(S.lang==='fr'&&translated===trimmed){
+  translated=trimmed
+   .replace(/^A clear view of the care you provide · /,'Une vue claire de votre engagement · ')
+   .replace(/^Due /,'Échéance : ')
+   .replace(/^Needed /,'Demandé pour le ')
+   .replace(/^Next due: /,'Prochaine échéance : ')
+   .replace(/^(\d+) recorded$/,'$1 enregistrés')
+   .replace(/^(\d+) awaiting confirmation$/,'$1 en attente de confirmation')
+   .replace(/^(\d+) confirmed payments · (\d+) categories$/,'$1 paiements confirmés · $2 catégories')
+   .replace(/^(\d+) events$/,'$1 événements')
+   .replace(/^(\d+) confirmed payments$/,'$1 paiements confirmés')
+   .replace(/^Invitee /,'Invité : ')
+   .replace(/^You have been invited to collaborate with (.*)\.$/,'Vous avez été invité à collaborer avec $1.')
+   .replace(/^Workspaces \/ /,'Espaces / ')
+   .replace(/^You have /,'Vous avez ')
+   .replace(/ · ([0-9]+) recorded$/,' · $1 enregistrés')
+   .replace(/ · ([0-9]+) categories$/,' · $1 catégories')
+   .replace(/\b(\d+) awaiting confirmation\b/,'$1 en attente de confirmation');
+  for(const a of ['Food','Housing','Support','Health','Education','Transport','Utilities','Giving','Cash','Bank transfer','Card','Other']){
+   if(translated===a)translated=FR[a];
+  }
+ }
+ return original.replace(trimmed,translated);
+}
+function localizeElement(container){
+ if(!container)return;
+ document.documentElement.lang=S.lang;
+ if(S.lang!=='fr')return;
+ const walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT);
+ const nodes=[];
+ while(walker.nextNode())nodes.push(walker.currentNode);
+ for(const node of nodes){
+  const parent=node.parentElement;
+  if(!parent||parent.closest('script,style,textarea,option[data-skip-translation],[contenteditable="true"]'))continue;
+  const translated=localizedText(node.nodeValue);
+  if(translated!==node.nodeValue)node.nodeValue=translated;
+ }
+ for(const el of container.querySelectorAll('[placeholder],[aria-label],[title]')){
+   for(const attr of ['placeholder','aria-label','title']){
+     if(!el.hasAttribute(attr))continue;
+     const original=el.getAttribute(attr);
+     const localized=localizedText(original);
+     if(original!==localized)el.setAttribute(attr,localized);
+   }
+ }
+}
+function langMarkup(){return '<button type="button" class="lang-switcher" data-language aria-label="'+t('Switch language')+'"><span class="'+(S.lang==='en'?'current':'')+'">EN</span><span class="lang-divider">/</span><span class="'+(S.lang==='fr'?'current':'')+'">FR</span></button>';}
+function applyLocalization(){
+ if(S.data){
+  let sideFooter=root.querySelector('.sidefooter');
+  if(sideFooter&&!sideFooter.querySelector('.side-lang'))sideFooter.insertAdjacentHTML('afterbegin','<div class="side-lang"><span class="side-lang-label">'+t('Language')+'</span>'+langMarkup()+'</div>');
+ }else{
+  let authCard=root.querySelector('.authcard');
+  if(authCard&&!authCard.querySelector('.auth-lang'))authCard.insertAdjacentHTML('afterbegin','<div class="auth-lang">'+langMarkup()+'</div>');
+ }
+ localizeElement(root);localizeElement(modalRoot);localizeElement(toastBox);
+}
+const localizationObserver=new MutationObserver(()=>applyLocalization());
+localizationObserver.observe(root,{childList:true,subtree:true});
+localizationObserver.observe(modalRoot,{childList:true,subtree:true});
+localizationObserver.observe(toastBox,{childList:true,subtree:true});
+document.addEventListener('click',e=>{
+ const btn=e.target.closest('[data-language]');
+ if(!btn)return;
+ e.preventDefault();
+ const lang=S.lang==='en'?'fr':'en';
+ S.lang=lang;
+ try{localStorage.setItem('mercy-ledger-language',lang);}catch(error){}
+ closeModal();
+ if(S.data)render();else authRender();
+ applyLocalization();
+});
+
+
+/* Guided first-login tour v1 */
+const gscTour={active:false,checked:false,index:0,steps:[],original:'overview',layer:null};
+const tourText=(en,fr)=>S.lang==='fr'?fr:en;
+function tourSteps(){
+ const s=[
+ {page:'overview',mobile:'.hero-card',desktop:'.hero-card',title:['Your dashboard','Votre tableau de bord'],body:['See confirmed spending, requests for approval and activity in this workspace.','Consultez les dépenses confirmées, les validations en attente et l’activité de cet espace.']},
+ {page:'overview',mobile:'.mobile-workspace',desktop:'.group-item.selected',title:['Switch workspaces','Changer d’espace'],body:['Each workspace has separate finances, members and permissions. Switch between office, personal or other budgets here.','Chaque espace possède ses propres finances et autorisations. Passez ici d’un budget professionnel à un autre.']}
+ ];
+ if(can('editor'))s.push({page:'overview',mobile:'.mobile-fab',desktop:'.headline [data-modal="quick"]',title:['Add records','Ajouter des opérations'],body:['Use Add to submit expenses, requests or recurring obligations. Your role controls which actions are available.','Utilisez Ajouter pour saisir des dépenses, des demandes ou des paiements récurrents. Vos droits dépendent de votre rôle.']});
+ s.push({page:'treasury',mobile:'.treasury-hero',desktop:'.treasury-hero',title:['Track available funds','Suivre les fonds disponibles'],body:['Treasury shows your cash, bank and wallet balances. Transfers between accounts do not change your total funds.','La trésorerie affiche les soldes en caisse, en banque et des portefeuilles. Les virements internes ne modifient pas le total.']});
+ if(can('controller'))s.push({page:'treasury',mobile:'.treasury-actions',desktop:'.treasury-actions',title:['Manage money in and out','Gérer les entrées et sorties'],body:['Set opening balances, record deposits or withdrawals, and transfer funds. Approved payments can debit a selected account.','Définissez les soldes initiaux, enregistrez les entrées et sorties et effectuez des virements. Les paiements approuvés peuvent débiter un compte.']});
+ s.push({page:'expenses',mobile:'.main .panel',desktop:'.main .panel',title:['Review transactions','Consulter les opérations'],body:['Track expenses from submission to approval and payment. Open a record to see its decision history.','Suivez les dépenses de la saisie au paiement. Ouvrez une opération pour voir son historique.']});
+ s.push({page:'requests',mobile:'.main .requestgrid',desktop:'.main .requestgrid',title:['Organize requests','Organiser les demandes'],body:['Keep purchase requests, reimbursements and upcoming needs in a queue until they are reviewed.','Classez les demandes d’achat, remboursements et besoins en attente de validation.']});
+ s.push({page:'reports',mobile:'.export-panel',desktop:'.export-panel',title:['Download professional reports','Télécharger des rapports professionnels'],body:['Choose a date range and export a multi-page PDF with summaries and transaction details.','Choisissez une période et exportez un PDF paginé avec synthèse et détails des opérations.']});
+ s.push({page:'team',mobile:'.main .panel',desktop:'.main .panel',title:['Work together securely','Collaborer en sécurité'],body:[can('owner')?'Invite team members here and set viewer, editor or controller access.':'Team access is role-based, so each person only sees or changes what is permitted.',can('owner')?'Invitez ici des membres avec un rôle de lecteur, éditeur ou contrôleur.':'Les accès dépendent des rôles. Chacun ne voit et ne modifie que ce qui est autorisé.']});
+ s.push({page:'overview',mobile:'.mobile-more',desktop:'.gsc-tour-launch',title:['You are ready!','Vous êtes prêt !'],body:['You can replay this guide from More → Take a tour on mobile, or from the desktop sidebar.','Relancez le guide depuis Plus → Visite guidée sur mobile ou depuis le menu latéral sur ordinateur.']});
+ return s;
+}
+function tourSelect(){
+ const t=gscTour.steps[gscTour.index];
+ const selectors=[matchMedia('(max-width:660px)').matches?t.mobile:t.desktop,'.main .headline','.main'];
+ for(const selector of selectors){
+  const el=document.querySelector(selector);
+  if(!el)continue;
+  const r=el.getBoundingClientRect(),style=getComputedStyle(el);
+  if(r.width>5&&r.height>5&&style.display!=='none'&&style.visibility!=='hidden')return el;
+ }
+ return null;
+}
+function tourPaint(){
+ if(!gscTour.active||!gscTour.layer)return;
+ const el=tourSelect();if(!el)return;
+ const r=el.getBoundingClientRect(),layer=gscTour.layer,spot=layer.querySelector('.gsc-tour-spotlight'),card=layer.querySelector('.gsc-tour-card');
+ const x=Math.max(8,r.left-5),top=Math.max(8,r.top-5);
+ Object.assign(spot.style,{left:x+'px',top:top+'px',width:Math.max(15,Math.min(window.innerWidth-x-8,r.width+10))+'px',height:Math.max(15,Math.min(window.innerHeight-top-8,r.height+10))+'px'});
+ const step=gscTour.steps[gscTour.index],last=gscTour.index===gscTour.steps.length-1;
+ card.innerHTML='<div class="gsc-tour-top"><strong>'+tourText('QUICK TOUR','VISITE GUIDÉE')+'</strong><button data-tour="language" type="button">'+(S.lang==='fr'?'FR / EN':'EN / FR')+'</button></div><div class="gsc-tour-progress"><span style="width:'+((gscTour.index+1)/gscTour.steps.length*100)+'%"></span></div>'+
+ '<span class="gsc-tour-count">'+tourText('Step','Étape')+' '+(gscTour.index+1)+' '+tourText('of','sur')+' '+gscTour.steps.length+'</span>'+
+ '<h2 id="gsc-tour-title">'+esc(tourText(step.title[0],step.title[1]))+'</h2><p id="gsc-tour-desc">'+esc(tourText(step.body[0],step.body[1]))+'</p>'+
+ '<div class="gsc-tour-controls"><button class="gsc-tour-skip" data-tour="skip" type="button">'+tourText('Skip tour','Ignorer')+'</button><div>'+(gscTour.index?'<button class="gsc-tour-back" data-tour="back" type="button">'+tourText('Back','Retour')+'</button>':'')+
+ '<button class="gsc-tour-next" data-tour="'+(last?'finish':'next')+'" type="button">'+(last?tourText('Finish','Terminer'):tourText('Next','Suivant'))+' →</button></div></div>';
+ const w=Math.min(365,window.innerWidth-24);
+ card.style.width=w+'px';card.style.left=Math.min(window.innerWidth-w-12,Math.max(12,r.left+r.width/2-w/2))+'px';
+ const ch=card.getBoundingClientRect().height;
+ const y=r.bottom+ch+14<window.innerHeight-12?r.bottom+13:r.top-ch-13>12?r.top-ch-13:Math.max(12,window.innerHeight-ch-18);
+ card.style.top=y+'px';
+}
+function tourPosition(){
+ if(!gscTour.active)return;
+ const target=tourSelect();
+ if(target){
+  const r=target.getBoundingClientRect();
+  if(r.bottom>window.innerHeight-105||r.top<100){
+   try{target.scrollIntoView({block:'center',behavior:'instant'});}catch(e){target.scrollIntoView({block:'center'});}
+  }
+ }
+ requestAnimationFrame(tourPaint);
+}
+function tourStep(i){
+ if(!gscTour.active)return;
+ gscTour.index=Math.min(Math.max(0,i),gscTour.steps.length-1);
+ const p=gscTour.steps[gscTour.index].page;
+ if(S.page!==p){S.page=p;closeModal();render();}
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  tourPosition();
+  gscTour.layer?.querySelector('.gsc-tour-next')?.focus({preventScroll:true});
+ }));
+}
+function tourEnd(){
+ if(!gscTour.active)return;
+ gscTour.active=false;
+ gscTour.layer?.remove();gscTour.layer=null;
+ window.removeEventListener('resize',tourPosition);
+ window.removeEventListener('scroll',tourPosition,true);
+ root.inert=false;
+ S.page=gscTour.original;
+ render();
+ api('onboarding/complete',{}).catch(e=>console.warn('Walkthrough save failed',e));
+}
+function tourStart(){
+ if(!S.data||gscTour.active)return;
+ closeModal();
+ gscTour.original=S.page;gscTour.steps=tourSteps();gscTour.active=true;
+ const layer=document.createElement('div');
+ layer.className='gsc-tour-layer';layer.id='gsc-tour-layer';
+ layer.innerHTML='<div class="gsc-tour-blocker"></div><div class="gsc-tour-spotlight"></div><section class="gsc-tour-card" role="dialog" aria-modal="true" aria-labelledby="gsc-tour-title" aria-describedby="gsc-tour-desc"></section>';
+ layer.addEventListener('click',e=>{
+  const a=e.target.closest('[data-tour]')?.dataset.tour;
+  if(a==='next')tourStep(gscTour.index+1);
+  if(a==='back')tourStep(gscTour.index-1);
+  if(a==='finish'||a==='skip')tourEnd();
+  if(a==='language'){
+   S.lang=S.lang==='en'?'fr':'en';
+   try{localStorage.setItem('mercy-ledger-language',S.lang);}catch(err){}
+   render();tourPosition();
+  }
+ });
+ document.body.appendChild(layer);gscTour.layer=layer;
+ root.inert=true;
+ window.addEventListener('resize',tourPosition);
+ window.addEventListener('scroll',tourPosition,true);
+ tourStep(0);
+}
+async function maybeStartTour(){
+ if(gscTour.checked||!S.data)return;
+ gscTour.checked=true;
+ try{
+  const info=await api('onboarding');
+  if(!info.completed&&S.data&&!gscTour.active)setTimeout(()=>{if(S.data&&!gscTour.active)tourStart();},400);
+ }catch(e){gscTour.checked=false;console.warn('Tour preference unavailable',e);}
+}
+document.addEventListener('keydown',e=>{
+ if(!gscTour.active)return;
+ if(e.key==='Escape'){e.preventDefault();tourEnd();}
+ else if(e.key==='ArrowRight'){e.preventDefault();tourStep(gscTour.index+1);}
+ else if(e.key==='ArrowLeft'){e.preventDefault();tourStep(gscTour.index-1);}
+ else if(e.key==='Tab'){
+  const controls=[...gscTour.layer.querySelectorAll('button')],first=controls[0],last=controls[controls.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+ }
+});
+
+init();
+})();
+</script></body></html>

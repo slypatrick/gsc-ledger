@@ -1,0 +1,17 @@
+node_modules/
+.wrangler/
+.dev.vars*
+.env*
+!.env.example
+generated/
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+*.sql.backup
+*production*.sql
+*export*.sql
+*.pem
+*.p12
+.DS_Store
